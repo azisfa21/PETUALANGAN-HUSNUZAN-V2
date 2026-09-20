@@ -1,0 +1,1994 @@
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petualangan Husnuzan - Game Pendidikan Agama Islam SD</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Fredoka & Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti for Victory Celebrations -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        * {
+            font-family: 'Fredoka', 'Inter', sans-serif;
+            user-select: none;
+        }
+
+        .title-3d {
+            color: #fef08a;
+            text-shadow: 
+                0 2px 0 #ca8a04,
+                0 4px 0 #a16207,
+                0 6px 0 #854d0e,
+                0 8px 0 #713f12,
+                0 10px 14px rgba(0, 0, 0, 0.6);
+        }
+
+        .wood-banner {
+            background: linear-gradient(180deg, #92400e 0%, #78350f 100%);
+            border: 4px solid #f59e0b;
+            box-shadow: 0 6px 0 #451a03, inset 0 2px 6px rgba(255,255,255,0.4);
+        }
+
+        .game-btn {
+            transition: all 0.15s ease;
+            position: relative;
+        }
+
+        .game-btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.08);
+        }
+
+        .game-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 rgba(0,0,0,0.5) !important;
+        }
+
+        .game-btn-yellow {
+            background: linear-gradient(180deg, #fde047 0%, #eab308 100%);
+            border: 4px solid #78350f;
+            box-shadow: 0 6px 0 #451a03, inset 0 3px 0 rgba(255,255,255,0.7);
+            color: #451a03;
+        }
+
+        .game-btn-blue {
+            background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%);
+            border: 4px solid #1e3a8a;
+            box-shadow: 0 6px 0 #0f172a, inset 0 3px 0 rgba(255,255,255,0.7);
+            color: #ffffff;
+        }
+
+        .game-btn-green {
+            background: linear-gradient(180deg, #4ade80 0%, #16a34a 100%);
+            border: 4px solid #14532d;
+            box-shadow: 0 6px 0 #052e16, inset 0 3px 0 rgba(255,255,255,0.7);
+            color: #ffffff;
+        }
+
+        .game-btn-purple {
+            background: linear-gradient(180deg, #c084fc 0%, #9333ea 100%);
+            border: 4px solid #4c1d95;
+            box-shadow: 0 6px 0 #2e1065, inset 0 3px 0 rgba(255,255,255,0.7);
+            color: #ffffff;
+        }
+
+        .game-btn-orange {
+            background: linear-gradient(180deg, #fb923c 0%, #ea580c 100%);
+            border: 4px solid #7c2d12;
+            box-shadow: 0 6px 0 #431407, inset 0 3px 0 rgba(255,255,255,0.7);
+            color: #ffffff;
+        }
+
+        .game-btn-red {
+            background: linear-gradient(180deg, #f97316 0%, #dc2626 100%);
+            border: 4px solid #7f1d1d;
+            box-shadow: 0 8px 0 #450a0a, inset 0 4px 0 rgba(255,255,255,0.7);
+            color: #ffffff;
+        }
+
+        .stone-card {
+            background: linear-gradient(180deg, #fef3c7 0%, #fde68a 100%);
+            border: 6px solid #78350f;
+            box-shadow: 0 10px 0 #451a03, inset 0 0 15px rgba(120, 53, 15, 0.2);
+        }
+
+        .input-game {
+            background-color: #fffbeb;
+            border: 3px solid #78350f;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.15);
+            color: #451a03;
+        }
+
+        .bounce-slow {
+            animation: bounceSlow 2s infinite;
+        }
+
+        @keyframes bounceSlow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            body {
+                background: white !important;
+                color: black !important;
+            }
+            main {
+                padding: 0 !important;
+            }
+            #printable-certificate {
+                border-width: 4px !important;
+                box-shadow: none !important;
+            }
+        }
+
+        .loading-gold-frame {
+            border: 6px solid #f59e0b;
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.4), inset 0 0 15px rgba(0, 0, 0, 0.8);
+        }
+
+        .progress-gold-border {
+            border: 4px solid #fbbf24;
+            box-shadow: 0 0 12px rgba(251, 191, 36, 0.5), inset 0 2px 4px rgba(0,0,0,0.6);
+        }
+
+        .glow-star {
+            filter: drop-shadow(0 0 12px #fde047) drop-shadow(0 0 24px #eab308);
+        }
+
+        .hidden-item-spot {
+            transition: all 0.2s ease;
+        }
+        .hidden-item-spot:hover {
+            transform: scale(1.15);
+            filter: brightness(1.2);
+        }
+
+        .vs-card-select {
+            transition: all 0.2s ease;
+        }
+        .vs-card-select:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.1);
+        }
+        .vs-card-selected {
+            border-color: #f59e0b !important;
+            background-color: #78350f !important;
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.6) !important;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-800 min-h-screen flex flex-col justify-between overflow-x-hidden" onclick="unlockAudioOnFirstTouch()" ontouchstart="unlockAudioOnFirstTouch()">
+
+    <!-- Audio Background Music Vocaroo Direct Link -->
+    <audio id="bgm-player" loop preload="auto">
+        <source src="https://media.vocaroo.com/mp3/18jLaKPzlTPX" type="audio/mp3">
+    </audio>
+
+    <!-- Floating Audio Prompt Banner -->
+    <div id="audio-prompt-banner" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 bg-amber-500/90 hover:bg-amber-500 text-slate-950 font-black text-xs px-4 py-2 rounded-full shadow-2xl border-2 border-amber-300 backdrop-blur cursor-pointer flex items-center space-x-2 animate-bounce no-print" onclick="forcePlayBgm()">
+        <span>🎵</span>
+        <span>KLIK DI SINI UNTUK MENGHIDUPKAN MUSIK LATAR!</span>
+        <i class="fa-solid fa-volume-high text-slate-900"></i>
+    </div>
+
+    <!-- LOADING SCREEN OVERLAY -->
+    <div id="loading-overlay" class="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 sm:p-6 text-white text-center transition-opacity duration-500 bg-cover bg-center bg-no-repeat" style="background-image: linear-gradient(to bottom, rgba(15, 23, 42, 0.35), rgba(15, 23, 42, 0.65)), url('https://i.ibb.co.com/6JbvCNhz/Gemini-Generated-Image-ygxcwfygxcwfygxc.jpg');">
+        <div class="max-w-xl w-full bg-slate-900/90 loading-gold-frame rounded-3xl p-6 sm:p-8 shadow-2xl backdrop-blur-md relative overflow-hidden flex flex-col items-center">
+
+            <div class="w-full flex justify-between items-center text-amber-300 text-xs font-bold px-2 mb-1 relative z-10 opacity-80">
+                <span>🏠 DESA KEBAIKAN • PAI SD</span>
+                <span class="text-xl">🌙</span>
+            </div>
+
+            <div class="flex justify-center items-center space-x-3 mb-2 relative z-10">
+                <img src="https://i.ibb.co.com/dYzPJ22/IMG-20260918-143603.jpg" class="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover border-2 border-amber-400 shadow-md animate-bounce" alt="Rafi">
+                <span class="text-5xl sm:text-6xl glow-star animate-pulse">⭐</span>
+                <img src="https://i.ibb.co.com/5hzWXc2T/IMG-20260918-143618.jpg" class="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover border-2 border-amber-400 shadow-md animate-bounce" style="animation-delay: 0.2s" alt="Aisyah">
+            </div>
+
+            <h2 id="loading-title" class="text-3xl sm:text-4xl font-black title-3d tracking-wider uppercase mb-4 leading-tight">
+                PETUALANGAN<br>HUSNUZAN
+            </h2>
+
+            <div class="w-full bg-slate-800/80 border-2 border-amber-500/50 rounded-2xl p-4 mb-4 shadow-inner relative z-10 backdrop-blur-sm">
+                <p id="loading-tip" class="text-sm sm:text-base text-amber-100 font-semibold italic min-h-[48px] flex items-center justify-center text-center">
+                    "Selamat datang di Desa Kebaikan! Menyiapkan peta petualangan..."
+                </p>
+            </div>
+
+            <div class="w-full bg-slate-950 rounded-full h-7 progress-gold-border p-1 relative z-10 overflow-hidden shadow-2xl mb-2">
+                <div id="loading-bar" class="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 h-full rounded-full w-0 transition-all duration-300 shadow-md flex items-center justify-end pr-1">
+                    <span class="inline-block text-xs">✨</span>
+                </div>
+            </div>
+
+            <div class="w-full flex justify-between items-center text-xs sm:text-sm font-extrabold text-amber-300 px-2 relative z-10 mb-3">
+                <span id="loading-status-text">Memuat...</span>
+                <span id="loading-percentage" class="text-amber-200">0%</span>
+            </div>
+
+            <button id="loading-skip-btn" onclick="forceHideLoading()" class="game-btn game-btn-green px-6 py-2 rounded-xl text-xs sm:text-sm font-black shadow-lg relative z-10 mt-1">
+                Lanjut ke Game <i class="fa-solid fa-arrow-right ml-1"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- HEADER NAVIGATION -->
+    <header class="bg-slate-800/90 backdrop-blur border-b border-slate-700 text-white px-4 py-3 sticky top-0 z-40 shadow-md">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="showScreen('screen-char-select')">
+                <span class="text-2xl">🌟</span>
+                <div>
+                    <h1 class="font-bold text-lg md:text-xl text-amber-400 leading-tight">Petualangan Husnuzan</h1>
+                    <p class="text-xs text-slate-300 hidden sm:block">Petualangan Desa Kebaikan menuju Tahta Husnuzan</p>
+                </div>
+            </div>
+
+            <div id="header-status" class="hidden flex items-center space-x-2 sm:space-x-3 flex-wrap">
+                <div class="flex items-center bg-slate-700/80 px-2.5 py-1 rounded-full border border-slate-600">
+                    <span id="header-avatar" class="mr-1.5 flex items-center"></span>
+                    <div class="text-left">
+                        <span id="header-name" class="font-bold text-xs sm:text-sm text-emerald-300 block leading-none">Pemain</span>
+                        <span id="header-badge" class="text-[9px] sm:text-[10px] text-amber-300 font-extrabold block leading-none mt-0.5">🥉 Pemula Husnuzan</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center bg-amber-500/20 px-2.5 py-1 rounded-full border border-amber-500/40">
+                    <i class="fa-solid fa-star text-amber-400 mr-1 text-xs"></i>
+                    <span id="header-stars" class="font-bold text-xs text-amber-300">0 / 6 ⭐</span>
+                </div>
+
+                <div class="flex items-center bg-yellow-500/20 px-2.5 py-1 rounded-full border border-yellow-500/40">
+                    <span class="mr-1 text-xs">🪙</span>
+                    <span id="header-coins" class="font-bold text-xs text-yellow-300">0 Koin</span>
+                </div>
+
+                <div class="flex items-center bg-purple-500/20 px-2.5 py-1 rounded-full border border-purple-500/40">
+                    <span class="mr-1 text-xs">⚡</span>
+                    <span id="header-xp" class="font-bold text-xs text-purple-300">0 XP</span>
+                </div>
+
+                <button onclick="toggleAudio()" id="audio-btn" class="bg-slate-700 hover:bg-slate-600 p-2 rounded-full text-white transition shadow-sm" title="Matikan/Hidupkan Suara">
+                    <i class="fa-solid fa-volume-high text-emerald-400"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="flex-grow flex items-center justify-center p-3 md:p-6 max-w-5xl mx-auto w-full">
+
+        <!-- SCREEN 1: CHARACTER SELECTION & REGISTRATION -->
+        <section id="screen-char-select" class="w-full bg-slate-900/40 rounded-3xl p-4 sm:p-6 md:p-8 shadow-2xl border-4 border-amber-500 text-center relative overflow-hidden bg-cover bg-center bg-no-repeat transition-all duration-500" style="background-image: linear-gradient(to bottom, rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.6)), url('https://i.ibb.co.com/jth5TjQ/1789716373159.png');">
+
+            <div class="mb-3 relative z-10">
+                <span class="inline-block px-5 py-2 bg-gradient-to-r from-emerald-600 via-green-500 to-teal-600 text-white border-2 border-emerald-300 rounded-full text-xs sm:text-sm font-black tracking-wide shadow-lg uppercase">
+                    🏠 TITIK AWAL: DESA KEBAIKAN (PETUALANGAN PAI SD)
+                </span>
+            </div>
+
+            <div class="mb-4 relative z-10 flex items-center justify-center space-x-2 sm:space-x-4">
+                <span class="text-3xl sm:text-5xl bounce-slow">⭐</span>
+                <h2 class="text-3xl sm:text-5xl md:text-6xl font-black title-3d tracking-wide uppercase leading-none">
+                    PETUALANGAN<br>HUSNUZAN
+                </h2>
+                <span class="text-3xl sm:text-5xl bounce-slow">⭐</span>
+            </div>
+
+            <div class="max-w-2xl mx-auto wood-banner rounded-2xl p-3 sm:p-4 mb-6 relative z-10 shadow-xl">
+                <p class="text-amber-100 text-xs sm:text-sm md:text-base font-extrabold leading-relaxed text-shadow">
+                    🌟 Selamat Datang Pahlawan Kebaikan di Desa Kebaikan! 🌟<br>
+                    Jelajahi 6 Wilayah Alur Petualangan Solo atau Tantang Temanmu di Arena VS! ⚔️<br>
+                    Dapatkan Koin 🪙, XP ⚡, dan Gelar <span class="text-amber-300 font-black">Ksatria Husnuzan</span>!
+                </p>
+            </div>
+
+            <!-- BUTTON MENU GRID -->
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 max-w-4xl mx-auto mb-6 relative z-10">
+                <button onclick="openModal('modal-materi')" class="game-btn game-btn-yellow p-3 rounded-2xl font-black text-xs transition flex flex-col items-center shadow-md">
+                    <span class="text-2xl mb-1">📖</span>
+                    <span>Menu Materi</span>
+                </button>
+                <button onclick="openModal('modal-tujuan')" class="game-btn game-btn-blue p-3 rounded-2xl font-black text-xs transition flex flex-col items-center shadow-md">
+                    <span class="text-2xl mb-1">🎯</span>
+                    <span>Tujuan Belajar</span>
+                </button>
+                <button onclick="openModal('modal-petunjuk')" class="game-btn game-btn-green p-3 rounded-2xl font-black text-xs transition flex flex-col items-center shadow-md">
+                    <span class="text-2xl mb-1">🎮</span>
+                    <span>Petunjuk Misi</span>
+                </button>
+                <button onclick="openModal('modal-skor')" class="game-btn game-btn-purple p-3 rounded-2xl font-black text-xs transition flex flex-col items-center shadow-md">
+                    <span class="text-2xl mb-1">🏆</span>
+                    <span>Papan Skor</span>
+                </button>
+                <button onclick="openModal('modal-vs-setup')" class="col-span-2 sm:col-span-1 game-btn game-btn-orange p-3 rounded-2xl font-black text-xs transition flex flex-col items-center shadow-md">
+                    <span class="text-2xl mb-1">⚔️</span>
+                    <span>ARENA VS HUSNUZAN</span>
+                </button>
+            </div>
+
+            <!-- REGISTRATION FORM -->
+            <div class="max-w-xl mx-auto stone-card rounded-3xl p-5 sm:p-6 shadow-2xl mb-6 text-left relative z-10">
+                <div class="bg-amber-900/90 text-amber-100 text-center py-2 px-4 rounded-xl font-black text-sm sm:text-base border-2 border-amber-600 mb-4 shadow-inner tracking-wider">
+                    📜 REGISTRASI PAHLAWAN KEBAIKAN
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
+                    <div class="sm:col-span-2">
+                        <label class="block text-xs font-black text-amber-950 mb-1">Nama Lengkap Siswa:</label>
+                        <input type="text" id="player-name-input" value="" placeholder="Ketik nama lengkap..." 
+                               class="w-full px-4 py-2.5 rounded-xl input-game text-sm font-bold shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-black text-amber-950 mb-1">No. Absen:</label>
+                        <input type="number" id="player-absen-input" value="" min="1" max="50" placeholder="No..." 
+                               class="w-full px-4 py-2.5 rounded-xl input-game text-sm font-bold text-center shadow-sm">
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-xs font-black text-amber-950 mb-1">Kelas:</label>
+                    <input type="text" id="player-class-input" value="" placeholder="Contoh: Kelas 3A" 
+                           class="w-full px-4 py-2.5 rounded-xl input-game text-sm font-bold shadow-sm">
+                </div>
+
+                <label class="block text-xs font-black text-amber-950 mb-2">Pilih Karakter Pemain Solo:</label>
+                <div class="flex justify-center gap-4">
+                    <div onclick="selectCharacter('rafi')" id="avatar-card-rafi" class="avatar-card cursor-pointer bg-white border-4 border-amber-600 rounded-2xl p-2.5 w-32 sm:w-36 transition hover:scale-105 shadow-md text-center">
+                        <img src="https://i.ibb.co.com/dYzPJ22/IMG-20260918-143603.jpg" class="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover mx-auto mb-1 border-2 border-amber-600 shadow-sm" alt="Rafi">
+                        <h4 class="font-extrabold text-amber-950 text-xs sm:text-sm">Rafi</h4>
+                        <span class="text-[9px] text-amber-800 font-bold block">Siswa Pemberani</span>
+                    </div>
+                    <div onclick="selectCharacter('aisyah')" id="avatar-card-aisyah" class="avatar-card cursor-pointer bg-white border-4 border-slate-300 rounded-2xl p-2.5 w-32 sm:w-36 transition hover:scale-105 shadow-md text-center opacity-70">
+                        <img src="https://i.ibb.co.com/5hzWXc2T/IMG-20260918-143618.jpg" class="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover mx-auto mb-1 border-2 border-amber-600 shadow-sm" alt="Aisyah">
+                        <h4 class="font-extrabold text-amber-950 text-xs sm:text-sm">Aisyah</h4>
+                        <span class="text-[9px] text-amber-800 font-bold block">Siswi Bijak</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative z-10">
+                <button onclick="startJourney()" class="game-btn game-btn-red px-8 py-3.5 rounded-2xl font-black text-base sm:text-xl transition shadow-xl uppercase tracking-wider inline-flex items-center space-x-2">
+                    <span>MASUK PETA DESA KEBAIKAN!</span>
+                    <i class="fa-solid fa-map-location-dot"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- SCREEN 2: MAP ROADMAP (6 WILAYAH) -->
+        <section id="screen-map" class="hidden w-full bg-slate-800/90 backdrop-blur rounded-3xl p-4 sm:p-6 shadow-2xl border-4 border-emerald-500 text-center">
+            <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
+                <div class="flex items-center space-x-2">
+                    <button onclick="showScreen('screen-char-select')" class="bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs px-3 py-1.5 rounded-xl border border-amber-400 transition shadow flex items-center gap-1">
+                        <i class="fa-solid fa-house"></i> Menu Utama (Home)
+                    </button>
+                    <button onclick="resetGame()" class="bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs px-3 py-1.5 rounded-xl transition">
+                        <i class="fa-solid fa-rotate-right mr-1"></i> Reset Progres
+                    </button>
+                </div>
+                <div class="text-right">
+                    <span class="text-xs text-emerald-400 font-bold block">ALUR PETUALANGAN</span>
+                    <span id="map-progress-text" class="text-sm font-black text-white">0 Dari 6 Wilayah</span>
+                </div>
+            </div>
+
+            <h2 class="text-2xl sm:text-3xl font-black title-3d uppercase mb-1">PETA PETUALANGAN HUSNUZAN</h2>
+            <p class="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto mb-6">
+                🏠 Desa Kebaikan ➔ 🌳 Hutan Prasangka ➔ 🌉 Jembatan Husnuzan ➔ 🕳️ Gua Suuzan ➔ 🏘️ Desa Persahabatan ➔ 🏰 Istana Husnuzan ➔ 👑 Tahta Kebaikan
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mb-6 text-left">
+                <!-- LEVEL 1 -->
+                <div id="btn-level-1" onclick="loadLevel(1)" class="bg-slate-700 border-2 border-emerald-500 p-3.5 rounded-2xl text-white font-bold cursor-pointer hover:scale-105 transition shadow-lg relative overflow-hidden">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="bg-emerald-600 text-white text-[10px] px-2 py-0.5 rounded-full font-black">WILAYAH 1</span>
+                        <span id="star-lvl-1" class="text-amber-400 text-sm">⭐</span>
+                    </div>
+                    <h3 class="font-extrabold text-sm text-amber-300">🌳 Hutan Prasangka</h3>
+                    <p class="text-[11px] text-slate-300 font-normal">🔎 Cari Benda Tersembunyi</p>
+                </div>
+
+                <!-- LEVEL 2 -->
+                <div id="btn-level-2" onclick="loadLevel(2)" class="bg-slate-800 border-2 border-slate-600 p-3.5 rounded-2xl text-slate-400 opacity-60 cursor-not-allowed transition shadow relative overflow-hidden">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="bg-slate-600 text-white text-[10px] px-2 py-0.5 rounded-full font-black">WILAYAH 2</span>
+                        <span id="star-lvl-2" class="text-slate-500 text-sm">🔒</span>
+                    </div>
+                    <h3 class="font-extrabold text-sm text-amber-200/60">🌉 Jembatan Husnuzan</h3>
+                    <p class="text-[11px] text-slate-400 font-normal">🧠 Kuis Pilihan Ganda</p>
+                </div>
+
+                <!-- LEVEL 3 -->
+                <div id="btn-level-3" onclick="loadLevel(3)" class="bg-slate-800 border-2 border-slate-600 p-3.5 rounded-2xl text-slate-400 opacity-60 cursor-not-allowed transition shadow relative overflow-hidden">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="bg-slate-600 text-white text-[10px] px-2 py-0.5 rounded-full font-black">WILAYAH 3</span>
+                        <span id="star-lvl-3" class="text-slate-500 text-sm">🔒</span>
+                    </div>
+                    <h3 class="font-extrabold text-sm text-amber-200/60">🕳️ Gua Suuzan</h3>
+                    <p class="text-[11px] text-slate-400 font-normal">🔗 Pisahkan Husnuzan & Suuzan</p>
+                </div>
+
+                <!-- LEVEL 4 -->
+                <div id="btn-level-4" onclick="loadLevel(4)" class="bg-slate-800 border-2 border-slate-600 p-3.5 rounded-2xl text-slate-400 opacity-60 cursor-not-allowed transition shadow relative overflow-hidden">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="bg-slate-600 text-white text-[10px] px-2 py-0.5 rounded-full font-black">WILAYAH 4</span>
+                        <span id="star-lvl-4" class="text-slate-500 text-sm">🔒</span>
+                    </div>
+                    <h3 class="font-extrabold text-sm text-amber-200/60">🏘️ Desa Persahabatan</h3>
+                    <p class="text-[11px] text-slate-400 font-normal">🎯 Pilih Tindakan Berdasarkan Situasi</p>
+                </div>
+
+                <!-- LEVEL 5 -->
+                <div id="btn-level-5" onclick="loadLevel(5)" class="bg-slate-800 border-2 border-slate-600 p-3.5 rounded-2xl text-slate-400 opacity-60 cursor-not-allowed transition shadow relative overflow-hidden">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="bg-slate-600 text-white text-[10px] px-2 py-0.5 rounded-full font-black">WILAYAH 5</span>
+                        <span id="star-lvl-5" class="text-slate-500 text-sm">🔒</span>
+                    </div>
+                    <h3 class="font-extrabold text-sm text-amber-200/60">🏰 Istana Husnuzan</h3>
+                    <p class="text-[11px] text-slate-400 font-normal">⚔️ Battle Quiz vs Monster Suuzan</p>
+                </div>
+
+                <!-- LEVEL 6 -->
+                <div id="btn-level-6" onclick="loadLevel(6)" class="bg-slate-800 border-2 border-slate-600 p-3.5 rounded-2xl text-slate-400 opacity-60 cursor-not-allowed transition shadow relative overflow-hidden">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="bg-slate-600 text-white text-[10px] px-2 py-0.5 rounded-full font-black">WILAYAH FINAL</span>
+                        <span id="star-lvl-6" class="text-slate-500 text-sm">🔒</span>
+                    </div>
+                    <h3 class="font-extrabold text-sm text-amber-200/60">👑 Tahta Kebaikan</h3>
+                    <p class="text-[11px] text-slate-400 font-normal">🏆 Ujian 5 Soal Bintang Husnuzan</p>
+                </div>
+            </div>
+
+            <div class="bg-slate-900/60 rounded-2xl p-4 border border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-3">
+                <div class="flex items-center space-x-3 text-left">
+                    <span id="current-badge-icon" class="text-3xl">🥉</span>
+                    <div>
+                        <h4 class="font-bold text-sm text-amber-300">Gelar Saat Ini: <span id="current-badge-text">Pemula Husnuzan</span></h4>
+                        <p class="text-xs text-slate-400">Selesaikan setiap misi untuk dapatkan +10 ⭐ Bintang, +20 🪙 Koin, & XP!</p>
+                    </div>
+                </div>
+                <button id="btn-start-current" onclick="startCurrentUnlockedLevel()" class="game-btn game-btn-green px-6 py-2.5 rounded-xl font-bold text-sm">
+                    Lanjutkan Misi <i class="fa-solid fa-play ml-1"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- SCREEN 3: GAMEPLAY ARENA (MINI-GAMES FOR EACH LEVEL) -->
+        <section id="screen-gameplay" class="hidden w-full bg-slate-900 rounded-3xl p-4 sm:p-6 shadow-2xl border-4 border-amber-500 text-white">
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-700">
+                <div>
+                    <span id="level-badge" class="bg-amber-500 text-slate-950 text-xs font-black px-2.5 py-1 rounded-lg uppercase tracking-wider">WILAYAH 1</span>
+                    <h3 id="level-title" class="text-lg sm:text-xl font-black text-amber-300 mt-1">Hutan Prasangka</h3>
+                </div>
+                <div class="text-right flex items-center space-x-3">
+                    <button onclick="showScreen('screen-map')" class="bg-slate-700 hover:bg-slate-600 text-white text-xs px-3 py-1.5 rounded-xl transition">
+                        <i class="fa-solid fa-map mr-1"></i> Peta Misi
+                    </button>
+                    <div>
+                        <span class="text-xs text-slate-400 block">Progres Misi</span>
+                        <span id="question-progress" class="text-sm font-black text-emerald-400">0 / 4</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="gameplay-area" class="min-h-[380px] flex flex-col justify-center items-center">
+                <!-- Dynamic Mini-Game Content injected via JS -->
+            </div>
+
+            <!-- FEEDBACK MODAL -->
+            <div id="feedback-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
+                <div class="max-w-md w-full bg-slate-800 border-4 rounded-3xl p-6 text-center shadow-2xl relative">
+                    <span id="feedback-icon" class="text-5xl block mb-2">🎉</span>
+                    <h3 id="feedback-title" class="text-2xl font-black mb-2">Misi Berhasil!</h3>
+                    <p id="feedback-message" class="text-sm text-slate-200 mb-4 leading-relaxed">Kamu menyelesaikan wilayah ini!</p>
+                    
+                    <div class="bg-slate-900/80 p-3 rounded-2xl border border-amber-500/40 mb-5 flex justify-around text-xs font-bold text-amber-300">
+                        <span>⭐ +10 Bintang</span>
+                        <span>🪙 +20 Koin</span>
+                        <span>⚡ +50 XP</span>
+                    </div>
+
+                    <button onclick="closeFeedbackAndContinue()" class="game-btn game-btn-green w-full py-3 rounded-xl font-bold text-base shadow-md">
+                        Lanjutkan Wilayah Berikutnya <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCREEN 4: ARENA VS HUSNUZAN -->
+        <section id="screen-vs-mode" class="hidden w-full bg-slate-900 rounded-3xl p-4 sm:p-6 shadow-2xl border-4 border-amber-500 text-white">
+            <div class="flex justify-between items-center mb-3 pb-3 border-b border-slate-700">
+                <div class="flex items-center space-x-2">
+                    <span id="vs-game-header-icon" class="text-2xl sm:text-3xl">🏰</span>
+                    <div>
+                        <h3 id="vs-game-header-title" class="text-lg sm:text-xl font-black text-amber-300 leading-tight">ARENA VS HUSNUZAN</h3>
+                        <p id="vs-game-header-subtitle" class="text-xs text-slate-300">Jawab soal husnuzan untuk mengalahkan lawanmu!</p>
+                    </div>
+                </div>
+                <button onclick="showScreen('screen-char-select')" class="bg-slate-700 hover:bg-slate-600 text-xs font-bold px-3 py-1.5 rounded-xl border border-slate-500 transition">
+                    <i class="fa-solid fa-house mr-1"></i> Menu Utama
+                </button>
+            </div>
+
+            <!-- TURN BANNER -->
+            <div id="vs-turn-banner" class="bg-gradient-to-r from-sky-600 to-blue-700 text-white text-center py-2 px-4 rounded-xl font-extrabold text-sm sm:text-base border border-sky-400 shadow-md mb-3 flex items-center justify-center space-x-2">
+                <span id="vs-turn-avatar" class="flex items-center"></span>
+                <span>GILIRAN PEMAIN 1: <span id="vs-turn-name">Pemain 1</span></span>
+            </div>
+
+            <!-- CANVAS / DYNAMIC ARENA CONTAINER -->
+            <div class="mb-4 bg-slate-950 p-2 sm:p-3 rounded-2xl border-2 border-slate-700 relative overflow-hidden">
+                <canvas id="vs-arena-canvas" width="700" height="200" class="w-full h-auto rounded-xl bg-slate-900 border border-slate-800 shadow-inner"></canvas>
+            </div>
+
+            <!-- QUESTION BOX -->
+            <div class="bg-slate-800 border-2 border-slate-700 rounded-2xl p-4 mb-2">
+                <span id="vs-question-counter" class="text-xs font-extrabold text-amber-400 block mb-1 uppercase tracking-wider">Soal 1 / 10</span>
+                <h4 id="vs-question-text" class="text-sm sm:text-base font-bold text-white mb-4">"Pertanyaan arena..."</h4>
+                
+                <div id="vs-answers-box" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5"></div>
+            </div>
+        </section>
+
+        <!-- SCREEN 5: EPILOGUE & CERTIFICATE -->
+        <section id="screen-epilogue" class="hidden w-full bg-slate-900 rounded-3xl p-4 sm:p-6 shadow-2xl border-4 border-amber-500 text-white text-center">
+            <div class="mb-4">
+                <span class="text-5xl sm:text-6xl animate-bounce inline-block">👑</span>
+                <h2 class="text-3xl sm:text-4xl font-black title-3d uppercase mb-1">TAHTA KEBAIKAN HUSNUZAN!</h2>
+                <p class="text-xs sm:text-sm text-emerald-300 font-bold">Masyaallah! Kamu telah menaklukkan seluruh 6 wilayah Petualangan Husnuzan!</p>
+            </div>
+
+            <div id="printable-certificate" class="max-w-xl mx-auto bg-amber-50 border-8 border-amber-600 rounded-3xl p-6 text-slate-900 shadow-2xl mb-6 relative overflow-hidden text-center">
+                <div class="border-2 border-amber-400 p-4 rounded-2xl bg-amber-100/40">
+                    <span class="text-3xl">📜</span>
+                    <h3 class="text-xl sm:text-2xl font-black text-amber-950 tracking-wider uppercase mb-1">SERTIFIKAT KELULUSAN</h3>
+                    <p class="text-xs font-bold text-amber-800 uppercase tracking-widest mb-4">Pendidikan Agama Islam SD</p>
+                    
+                    <p class="text-xs text-slate-700 font-medium italic mb-1">Diberikan Kepada Pejuang Husnuzan:</p>
+                    <h2 id="cert-player-name" class="text-2xl sm:text-3xl font-black text-emerald-800 uppercase underline decoration-amber-500 mb-1">Nama Pemain</h2>
+                    <p id="cert-player-detail" class="text-xs font-bold text-slate-600 mb-4">No. Absen: - • Kelas 3</p>
+
+                    <p class="text-xs sm:text-sm text-slate-800 leading-relaxed mb-4 font-semibold">
+                        Telah berhasil menaklukkan seluruh 6 Wilayah Petualangan dan meraih Gelar Tertinggi <span id="cert-badge-title" class="text-amber-900 font-black">👑 Ksatria Husnuzan</span> dalam media pembelajaran PAI SD.
+                    </p>
+
+                    <div class="flex justify-around items-center pt-2 border-t border-amber-300 text-xs">
+                        <div>
+                            <span class="text-[10px] text-slate-500 block">Total Poin PAI</span>
+                            <span id="cert-score-text" class="font-extrabold text-emerald-700 text-sm">0 Poin</span>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-slate-500 block">Perolehan Hadiah</span>
+                            <span id="cert-reward-text" class="font-extrabold text-amber-800 text-xs">120 🪙 • 300 XP</span>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-slate-500 block">Tanggal Lulus</span>
+                            <span id="cert-date-text" class="font-bold text-slate-700">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="max-w-xl mx-auto bg-slate-800 border-2 border-amber-500/60 rounded-2xl p-4 text-left mb-6">
+                <h4 class="font-black text-amber-300 text-sm uppercase mb-2 flex items-center gap-2">
+                    <span>🌈 MISI KEHIDUPAN NYATA (AKU ANAK HEBAT)</span>
+                </h4>
+                <p class="text-xs text-slate-300 mb-3">Terapkan 3 sikap Husnuzan ini dalam kehidupan sehari-harimu:</p>
+                <div class="space-y-2 text-xs">
+                    <label class="flex items-start space-x-2.5 bg-slate-700/60 p-2 rounded-xl cursor-pointer hover:bg-slate-700">
+                        <input type="checkbox" checked class="mt-0.5 rounded text-emerald-500">
+                        <span class="text-slate-200"><strong>MISI 1:</strong> Berpikir positif saat teman melakukan sesuatu yang belum kita pahami.</span>
+                    </label>
+                    <label class="flex items-start space-x-2.5 bg-slate-700/60 p-2 rounded-xl cursor-pointer hover:bg-slate-700">
+                        <input type="checkbox" checked class="mt-0.5 rounded text-emerald-500">
+                        <span class="text-slate-200"><strong>MISI 2:</strong> Bertanya baik-baik (Tabayyun) sebelum berprasangka buruk.</span>
+                    </label>
+                    <label class="flex items-start space-x-2.5 bg-slate-700/60 p-2 rounded-xl cursor-pointer hover:bg-slate-700">
+                        <input type="checkbox" checked class="mt-0.5 rounded text-emerald-500">
+                        <span class="text-slate-200"><strong>MISI 3:</strong> Berprasangka baik kepada Allah Swt. dan selalu bersyukur.</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-3 no-print">
+                <button onclick="window.print()" class="game-btn game-btn-yellow px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow-md">
+                    <i class="fa-solid fa-print mr-1"></i> Cetak Sertifikat
+                </button>
+                <button onclick="showScreen('screen-char-select')" class="game-btn game-btn-blue px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow-md">
+                    <i class="fa-solid fa-house mr-1"></i> Menu Utama (Home)
+                </button>
+                <button onclick="resetGame()" class="game-btn game-btn-green px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow-md">
+                    <i class="fa-solid fa-rotate-right mr-1"></i> Main Lagi
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- GENERAL NOTICE MODAL -->
+    <div id="modal-notice" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
+        <div class="max-w-md w-full bg-slate-800 border-4 border-amber-500 rounded-3xl p-6 text-center text-white shadow-2xl relative">
+            <span id="notice-icon" class="text-4xl block mb-2">📢</span>
+            <h3 id="notice-title" class="text-xl font-black text-amber-300 mb-2">Pemberitahuan</h3>
+            <p id="notice-message" class="text-xs sm:text-sm text-slate-200 mb-6 leading-relaxed">Pesan info...</p>
+            <button onclick="closeNoticeModal()" class="game-btn game-btn-yellow w-full py-2.5 rounded-xl font-bold text-sm shadow-md">
+                Mengerti 👍
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL 1: MENU MATERI -->
+    <div id="modal-materi" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
+        <div class="max-w-2xl w-full bg-slate-800 border-4 border-amber-500 rounded-3xl p-5 sm:p-6 text-white shadow-2xl relative max-h-[85vh] flex flex-col">
+            <div class="flex justify-between items-center pb-3 border-b border-slate-700 mb-4">
+                <h3 class="text-xl font-black text-amber-300 flex items-center gap-2">📖 MATERI PEMBELAJARAN PAI: HUSNUZAN</h3>
+                <button onclick="closeModal('modal-materi')" class="text-slate-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div class="overflow-y-auto space-y-4 pr-1 text-xs sm:text-sm text-slate-200 text-left leading-relaxed">
+                <!-- SECTION 1 -->
+                <div class="bg-emerald-950/70 border-2 border-emerald-500 p-4 rounded-2xl shadow">
+                    <span class="text-xs font-black text-emerald-400 uppercase block mb-1">🎯 MATERI TUJUAN 1: PENGERTIAN & ARTI ISTILAH</span>
+                    <p class="text-xs sm:text-sm text-emerald-100 font-semibold mb-3">
+                        Memahami tiga konsep penting dalam menjaga kedamaian dan keharmonisan bermasyarakat dalam ajaran Islam:
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                        <div class="bg-slate-900 p-3 rounded-xl border border-emerald-500">
+                            <span class="font-bold text-emerald-300 block mb-1 text-sm">🟢 1. Husnuzan</span>
+                            <p class="text-[11px] text-slate-300">Berasal dari kata <i>Husnu</i> (baik) & <i>Zhan</i> (prasangka). Artinya <strong>berbaik sangka</strong> atau berpikir positif kepada Allah Swt., diri sendiri, dan sesama.</p>
+                        </div>
+                        <div class="bg-slate-900 p-3 rounded-xl border border-rose-500">
+                            <span class="font-bold text-rose-300 block mb-1 text-sm">🔴 2. Suuzan</span>
+                            <p class="text-[11px] text-slate-300">Berasal dari kata <i>Su'u</i> (buruk) & <i>Zhan</i> (prasangka). Artinya <strong>berburuk sangka</strong> atau menduga buruk tanpa bukti nyata. Perilaku tercela!</p>
+                        </div>
+                        <div class="bg-slate-900 p-3 rounded-xl border border-sky-500">
+                            <span class="font-bold text-sky-300 block mb-1 text-sm">🔍 3. Tabayyun</span>
+                            <p class="text-[11px] text-slate-300">Artinya <strong>mencari kebenaran / klarifikasi</strong> secara sopan sebelum mengambil kesimpulan buruk saat menerima informasi.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 2 -->
+                <div class="bg-slate-700/80 p-4 rounded-2xl border border-slate-600 shadow-sm">
+                    <span class="text-xs font-black text-amber-300 uppercase block mb-2">🎯 MATERI TUJUAN 2: MEMBEDAKAN PERILAKU HUSNUZAN VS SUUZAN</span>
+                    <p class="text-xs text-slate-300 mb-3">Perbandingan respon perilaku dalam situasi sehari-hari di sekolah dan rumah:</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                        <div class="bg-emerald-950/60 p-3.5 rounded-xl border border-emerald-600">
+                            <span class="font-bold text-emerald-300 block mb-2 text-sm">✅ Perilaku Husnuzan (Terpuji)</span>
+                            <ul class="space-y-2 text-slate-200">
+                                <li class="flex items-start gap-1.5"><span class="text-emerald-400 font-bold">•</span> <span><strong>Saat Teman Terlambat:</strong> Berpikir positif mungkin jalanan macet atau ada halangan mendadak.</span></li>
+                                <li class="flex items-start gap-1.5"><span class="text-emerald-400 font-bold">•</span> <span><strong>Pensil Hilang:</strong> Mencari dahulu dengan tenang & bertanya baik-baik kepada teman.</span></li>
+                                <li class="flex items-start gap-1.5"><span class="text-emerald-400 font-bold">•</span> <span><strong>Teman Juara:</strong> Turut senang, mengucapkan selamat, dan ikut terpacu belajar.</span></li>
+                            </ul>
+                        </div>
+                        <div class="bg-rose-950/60 p-3.5 rounded-xl border border-rose-600">
+                            <span class="font-bold text-rose-300 block mb-2 text-sm">❌ Perilaku Suuzan (Dihindari)</span>
+                            <ul class="space-y-2 text-slate-200">
+                                <li class="flex items-start gap-1.5"><span class="text-rose-400 font-bold">•</span> <span><strong>Saat Teman Terlambat:</strong> Menuduh teman malas bangun pagi tanpa tahu alasannya.</span></li>
+                                <li class="flex items-start gap-1.5"><span class="text-rose-400 font-bold">•</span> <span><strong>Pensil Hilang:</strong> Langsung menuduh teman sebangku mengambilnya.</span></li>
+                                <li class="flex items-start gap-1.5"><span class="text-rose-400 font-bold">•</span> <span><strong>Teman Juara:</strong> Iri hati dan menuduh teman mencontek saat ujian.</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 3 -->
+                <div class="bg-slate-700/80 p-4 rounded-2xl border border-slate-600 shadow-sm">
+                    <span class="text-xs font-black text-sky-300 uppercase block mb-2">🎯 MATERI TUJUAN 3: MENERAPKAN 3 BENTUK SIKAP HUSNUZAN</span>
+                    <div class="space-y-2.5 text-xs">
+                        <div class="bg-slate-800 p-3 rounded-xl border-l-4 border-amber-400">
+                            <span class="font-bold text-amber-300 block text-sm mb-1">1. Husnuzan kepada Allah Swt.</span>
+                            <p class="text-slate-300">Yakin bahwa segala takdir, ujian, kesehatan, dan rezeki dari Allah Swt. adalah yang terbaik untuk kita. Selalu bersyukur dan tidak mengeluh.</p>
+                        </div>
+                        <div class="bg-slate-800 p-3 rounded-xl border-l-4 border-emerald-400">
+                            <span class="font-bold text-emerald-300 block text-sm mb-1">2. Husnuzan kepada Diri Sendiri</span>
+                            <p class="text-slate-300">Memiliki percaya diri, rajin belajar, tidak mudah menyerah saat gagal, dan yakin bisa mencapai cita-cita dengan bersungguh-sungguh.</p>
+                        </div>
+                        <div class="bg-slate-800 p-3 rounded-xl border-l-4 border-sky-400">
+                            <span class="font-bold text-sky-300 block text-sm mb-1">3. Husnuzan kepada Sesama Manusia</span>
+                            <p class="text-slate-300">Selalu berpikir positif terhadap teman, guru, dan orang tua, saling mendoakan, dan menyelesaikan kesalahpahaman dengan cara Tabayyun.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-slate-700 text-right">
+                <button onclick="closeModal('modal-materi')" class="game-btn game-btn-yellow px-5 py-2 rounded-xl text-xs font-bold">Saya Paham, Siap Bertualang! 🚀</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: TUJUAN BELAJAR -->
+    <div id="modal-tujuan" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
+        <div class="max-w-lg w-full bg-slate-800 border-4 border-sky-500 rounded-3xl p-5 sm:p-6 text-white shadow-2xl relative">
+            <div class="flex justify-between items-center pb-3 border-b border-slate-700 mb-4">
+                <h3 class="text-xl font-black text-sky-300 flex items-center gap-2">🎯 TUJUAN PEMBELAJARAN PAI</h3>
+                <button onclick="closeModal('modal-tujuan')" class="text-slate-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="space-y-3 text-xs sm:text-sm text-slate-200 text-left">
+                <div class="flex items-start space-x-3 bg-slate-700/60 p-3 rounded-2xl">
+                    <span class="text-xl">1️⃣</span>
+                    <p>Peserta didik mampu <strong>menjelaskan arti Husnuzan, Suuzan, dan Tabayyun</strong> dengan benar dan percaya diri.</p>
+                </div>
+                <div class="flex items-start space-x-3 bg-slate-700/60 p-3 rounded-2xl">
+                    <span class="text-xl">2️⃣</span>
+                    <p>Peserta didik dapat <strong>membedakan contoh perilaku Husnuzan dan Suuzan</strong> dalam kehidupan sehari-hari.</p>
+                </div>
+                <div class="flex items-start space-x-3 bg-slate-700/60 p-3 rounded-2xl">
+                    <span class="text-xl">3️⃣</span>
+                    <p>Peserta didik mampu <strong>menerapkan sikap berbaik sangka</strong> kepada Allah Swt., diri sendiri, dan sesama teman.</p>
+                </div>
+            </div>
+            <div class="mt-5 text-right">
+                <button onclick="closeModal('modal-tujuan')" class="game-btn game-btn-blue px-5 py-2 rounded-xl text-xs font-bold">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: PETUNJUK MISI -->
+    <div id="modal-petunjuk" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
+        <div class="max-w-lg w-full bg-slate-800 border-4 border-green-500 rounded-3xl p-5 sm:p-6 text-white shadow-2xl relative">
+            <div class="flex justify-between items-center pb-3 border-b border-slate-700 mb-4">
+                <h3 class="text-xl font-black text-green-300 flex items-center gap-2">🎮 PETUNJUK 6 WILAYAH PETUALANGAN</h3>
+                <button onclick="closeModal('modal-petunjuk')" class="text-slate-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="space-y-2.5 text-xs text-slate-200 text-left">
+                <p>🌳 <strong>Level 1 (Hutan Prasangka):</strong> Cari & temukan 4 benda kebaikan tersembunyi.</p>
+                <p>🌉 <strong>Level 2 (Jembatan Husnuzan):</strong> Jawab kuis pilihan ganda untuk menyeberang.</p>
+                <p>🕳️ <strong>Level 3 (Gua Suuzan):</strong> Pisahkan kartu perilaku ke dalam wadah Husnuzan / Suuzan.</p>
+                <p>🏘️ <strong>Level 4 (Desa Persahabatan):</strong> Pilih tindakan tepat berdasarkan situasi sosial.</p>
+                <p>🏰 <strong>Level 5 (Istana Husnuzan):</strong> Battle quiz melawan Monster Suuzan.</p>
+                <p>👑 <strong>Final (Tahta Kebaikan):</strong> Jawab 5 soal utama untuk meraih Bintang Husnuzan & Sertifikat.</p>
+            </div>
+            <div class="mt-5 text-right">
+                <button onclick="closeModal('modal-petunjuk')" class="game-btn game-btn-green px-5 py-2 rounded-xl text-xs font-bold">Mengerti!</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 4: PAPAN SKOR -->
+    <div id="modal-skor" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
+        <div class="max-w-lg w-full bg-slate-800 border-4 border-purple-500 rounded-3xl p-5 sm:p-6 text-white shadow-2xl relative">
+            <div class="flex justify-between items-center pb-3 border-b border-slate-700 mb-4">
+                <h3 class="text-xl font-black text-purple-300 flex items-center gap-2">🏆 PAPAN SKOR PAHLAWAN</h3>
+                <button onclick="closeModal('modal-skor')" class="text-slate-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="leaderboard-content" class="space-y-2 text-xs text-slate-200">
+                <div class="bg-slate-700 p-3 rounded-xl flex justify-between items-center">
+                    <div>
+                        <span class="font-bold text-amber-300 block">Papan Skor Pemain</span>
+                        <span class="text-[10px] text-slate-400">Data tersimpan otomatis saat menyelesaikan misi</span>
+                    </div>
+                    <span class="font-black text-emerald-400 text-sm">⭐ Realtime</span>
+                </div>
+            </div>
+            <div class="mt-5 text-right">
+                <button onclick="closeModal('modal-skor')" class="game-btn game-btn-purple px-5 py-2 rounded-xl text-xs font-bold">Tutup Papan Skor</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 5: VERSUS MODE SETUP (ARENA VS HUSNUZAN) -->
+    <div id="modal-vs-setup" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-sm overflow-y-auto">
+        <div class="max-w-xl w-full bg-slate-800 border-4 border-amber-500 rounded-3xl p-5 sm:p-6 text-white shadow-2xl relative text-center my-auto">
+            <div class="flex justify-between items-center pb-3 border-b border-slate-700 mb-4">
+                <div>
+                    <h3 class="text-xl font-black text-amber-300 flex items-center gap-2">🏆 ARENA VS HUSNUZAN</h3>
+                    <p class="text-xs text-slate-300 text-left">Tantang Temanmu & Pilih Pertandingan Terfavorit!</p>
+                </div>
+                <button onclick="closeModal('modal-vs-setup')" class="text-slate-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <!-- PLAYER SETUP SECTION -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4 text-left">
+                <!-- PLAYER 1 -->
+                <div class="bg-sky-950/80 border-2 border-sky-400 rounded-2xl p-3 shadow-md">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="text-xs font-extrabold text-sky-300 uppercase">🔵 PEMAIN 1</span>
+                        <span class="text-xs text-sky-200 font-bold">Tim 1</span>
+                    </div>
+                    <input type="text" id="p1-name-input" value="" placeholder="Ketik nama Pemain 1..." 
+                           class="w-full px-3 py-1.5 rounded-xl border border-sky-300 text-xs font-bold mb-2 text-slate-900">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-[11px] font-bold text-slate-300">Karakter:</span>
+                        <button onclick="selectVsChar(1, 'rafi')" id="vs-p1-rafi" class="px-2.5 py-1 rounded-lg font-bold text-[11px] bg-sky-500 text-white border-2 border-sky-600 flex items-center gap-1">
+                            <img src="https://i.ibb.co.com/dYzPJ22/IMG-20260918-143603.jpg" class="w-4 h-4 rounded-full object-cover inline-block" alt="Rafi"> Rafi
+                        </button>
+                        <button onclick="selectVsChar(1, 'aisyah')" id="vs-p1-aisyah" class="px-2.5 py-1 rounded-lg font-bold text-[11px] bg-slate-200 text-slate-700 flex items-center gap-1">
+                            <img src="https://i.ibb.co.com/5hzWXc2T/IMG-20260918-143618.jpg" class="w-4 h-4 rounded-full object-cover inline-block" alt="Aisyah"> Aisyah
+                        </button>
+                    </div>
+                </div>
+
+                <!-- PLAYER 2 -->
+                <div class="bg-pink-950/80 border-2 border-pink-400 rounded-2xl p-3 shadow-md">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="text-xs font-extrabold text-pink-300 uppercase">🔴 PEMAIN 2</span>
+                        <span class="text-xs text-pink-200 font-bold">Tim 2</span>
+                    </div>
+                    <input type="text" id="p2-name-input" value="" placeholder="Ketik nama Pemain 2..." 
+                           class="w-full px-3 py-1.5 rounded-xl border border-pink-300 text-xs font-bold mb-2 text-slate-900">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-[11px] font-bold text-slate-300">Karakter:</span>
+                        <button onclick="selectVsChar(2, 'rafi')" id="vs-p2-rafi" class="px-2.5 py-1 rounded-lg font-bold text-[11px] bg-slate-200 text-slate-700 flex items-center gap-1">
+                            <img src="https://i.ibb.co.com/dYzPJ22/IMG-20260918-143603.jpg" class="w-4 h-4 rounded-full object-cover inline-block" alt="Rafi"> Rafi
+                        </button>
+                        <button onclick="selectVsChar(2, 'aisyah')" id="vs-p2-aisyah" class="px-2.5 py-1 rounded-lg font-bold text-[11px] bg-pink-500 text-white border-2 border-pink-600 flex items-center gap-1">
+                            <img src="https://i.ibb.co.com/5hzWXc2T/IMG-20260918-143618.jpg" class="w-4 h-4 rounded-full object-cover inline-block" alt="Aisyah"> Aisyah
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MATCH TYPE SELECTION GRID -->
+            <div class="text-left mb-3">
+                <label class="block text-xs font-black text-amber-300 mb-2 uppercase">🎮 PILIH PERTANDINGAN ARENA VS:</label>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+                    <!-- GAME 1: REBUT ISTANA -->
+                    <div onclick="selectVsMatchMode('castle')" id="match-card-castle" class="vs-card-select vs-card-selected cursor-pointer bg-slate-700 border-2 border-amber-500 p-2.5 rounded-2xl text-white font-bold text-center shadow">
+                        <span class="text-2xl block mb-0.5">🏰</span>
+                        <h4 class="font-extrabold text-amber-300 text-xs">Rebut Istana</h4>
+                        <p class="text-[9px] text-slate-300">Pasukan maju ke istana</p>
+                    </div>
+
+                    <!-- GAME 2: PEDANG KATA -->
+                    <div onclick="selectVsMatchMode('sword')" id="match-card-sword" class="vs-card-select cursor-pointer bg-slate-700 border-2 border-slate-600 p-2.5 rounded-2xl text-white font-bold text-center shadow">
+                        <span class="text-2xl block mb-0.5">⚔️</span>
+                        <h4 class="font-extrabold text-amber-300 text-xs">Pedang Kata</h4>
+                        <p class="text-[9px] text-slate-300">Tebas monster prasangka</p>
+                    </div>
+
+                    <!-- GAME 3: PUZZLE KILAT -->
+                    <div onclick="selectVsMatchMode('puzzle')" id="match-card-puzzle" class="vs-card-select cursor-pointer bg-slate-700 border-2 border-slate-600 p-2.5 rounded-2xl text-white font-bold text-center shadow">
+                        <span class="text-2xl block mb-0.5">🧩</span>
+                        <h4 class="font-extrabold text-amber-300 text-xs">Puzzle Kilat</h4>
+                        <p class="text-[9px] text-slate-300">Susun kalimat Husnuzan</p>
+                    </div>
+
+                    <!-- GAME 4: BALAP SIPUT -->
+                    <div onclick="selectVsMatchMode('rocket')" id="match-card-rocket" class="vs-card-select cursor-pointer bg-slate-700 border-2 border-slate-600 p-2.5 rounded-2xl text-white font-bold text-center shadow">
+                        <span class="text-2xl block mb-0.5">🐌</span>
+                        <h4 class="font-extrabold text-amber-300 text-xs">Balap Siput</h4>
+                        <p class="text-[9px] text-slate-300">Siput merayap ke finish</p>
+                    </div>
+
+                    <!-- GAME 5: LAWAN MONSTER -->
+                    <div onclick="selectVsMatchMode('dragon')" id="match-card-dragon" class="vs-card-select cursor-pointer bg-slate-700 border-2 border-slate-600 p-2.5 rounded-2xl text-white font-bold text-center shadow">
+                        <span class="text-2xl block mb-0.5">🐉</span>
+                        <h4 class="font-extrabold text-amber-300 text-xs">Lawan Monster</h4>
+                        <p class="text-[9px] text-slate-300">Kurangi HP Monster Suuzan</p>
+                    </div>
+
+                    <!-- GAME 6: PERBURUAN BINTANG -->
+                    <div onclick="selectVsMatchMode('star_hunt')" id="match-card-star_hunt" class="vs-card-select cursor-pointer bg-slate-700 border-2 border-slate-600 p-2.5 rounded-2xl text-white font-bold text-center shadow">
+                        <span class="text-2xl block mb-0.5">💎</span>
+                        <h4 class="font-extrabold text-amber-300 text-xs">Perburuan Bintang</h4>
+                        <p class="text-[9px] text-slate-300">Kumpulkan bintang terbanyak</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <button onclick="startVsRace()" class="game-btn game-btn-orange w-full py-3 rounded-2xl font-black text-base shadow-lg uppercase tracking-wider">
+                    MULAI PERTANDINGAN ARENA! 🔥
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-slate-950 text-slate-400 text-center py-3 text-xs border-t border-slate-800 no-print">
+        <p>© 2026 Petualangan Husnuzan • Media Pembelajaran PAI SD Interaktif</p>
+    </footer>
+
+    <!-- JAVASCRIPT GAME LOGIC -->
+    <script>
+        const CHAR_AVATARS = {
+            rafi: "https://i.ibb.co.com/dYzPJ22/IMG-20260918-143603.jpg",
+            aisyah: "https://i.ibb.co.com/5hzWXc2T/IMG-20260918-143618.jpg"
+        };
+
+        const BADGES = [
+            { threshold: 0, name: "Pemula Husnuzan", icon: "🥉" },
+            { threshold: 2, name: "Sahabat Husnuzan", icon: "🥈" },
+            { threshold: 4, name: "Pahlawan Husnuzan", icon: "🥇" },
+            { threshold: 6, name: "Ksatria Husnuzan", icon: "👑" }
+        ];
+
+        let gameState = {
+            playerName: "",
+            playerAbsen: "",
+            playerClass: "",
+            selectedChar: "rafi",
+            unlockedLevel: 1,
+            currentLevel: 1,
+            stars: [false, false, false, false, false, false],
+            coins: 0,
+            xp: 0,
+            totalScore: 0,
+            audioMuted: false
+        };
+
+        let vsState = {
+            selectedVsGame: "castle",
+            p1Name: "Pemain 1",
+            p2Name: "Pemain 2",
+            p1Avatar: "rafi",
+            p2Avatar: "aisyah",
+            p1Pos: 0,
+            p2Pos: 0,
+            currentTurn: 1,
+            qIndex: 0
+        };
+
+        const vsMatchConfigs = {
+            castle: { title: "🏰 Rebut Istana", subtitle: "Jawaban benar membuat pasukan maju menuju istana!", icon: "🏰" },
+            sword: { title: "⚔️ Pertarungan Pedang Kata", subtitle: "Pilih kata terpuji untuk menebas monster prasangka!", icon: "⚔️" },
+            puzzle: { title: "🧩 Puzzle Kilat", subtitle: "Susun kalimat Husnuzan secepat mungkin!", icon: "🧩" },
+            rocket: { title: "🐌 Balap Siput", subtitle: "Jawaban benar membuat siput merayap lebih cepat menuju garis finish!", icon: "🐌" },
+            dragon: { title: "🐉 Lawan Monster Suuzan", subtitle: "Jawaban benar mengurangi HP Monster Suuzan!", icon: "🐉" },
+            star_hunt: { title: "💎 Perburuan Bintang", subtitle: "Kumpulkan bintang dengan memilih perilaku yang tepat!", icon: "💎" }
+        };
+
+        const vsQuestionsByMode = {
+            castle: [
+                { q: "Ketika temanmu mendapat giliran presentasi duluan di kelas, sikap husnuzanmu...", answers: ["Mendukung & mendoakan sukses", "Berpikir dia ingin memamerkan kemampuannya"], correct: 0 },
+                { q: "Allah Swt. belum mengabulkan doa kita saat ini. Sikap husnuzan kita...", answers: ["Yakin Allah menyiapkan waktu paling baik", "Berhenti berdoa dan berkecil hati"], correct: 0 },
+                { q: "Temanmu menjatuhkan tempat pensilmu tanpa sengaja. Respon terbaikmu...", answers: ["Membantu merapikan & berbaik sangka", "Langsung membentak dan membalas"], correct: 0 },
+                { q: "Saat kelompokmu mengalami kekalahan dalam perlombaan sekolah...", answers: ["Menerima dengan ikhlas & belajar lagi", "Menuduh anggota kelompok tidak berguna"], correct: 0 },
+                { q: "Melihat orang tua bekerja keras setiap hari, kita meyakini bahwa...", answers: ["Mereka sangat menyayangi dan berjuang untuk kita", "Mereka hanya sibuk dan tidak peduli"], correct: 0 },
+                { q: "Ketika hasil karya menggambar teman dipuji guru lebih baik dari karya kita, sikap husnuzan kita...", answers: ["Turut senang dan bertekad belajar menggambar lebih giat", "Merasa tidak adil dan menuduh guru pilih kasih"], correct: 0 },
+                { q: "Saat teman lupa membawa uang saku dan terlihat sedih di kantin, tindakan berbaik sangka kita...", answers: ["Menawarkan berbagi makanan dengannya secara tulus", "Menuduh teman tersebut sengaja pura-pura lupa"], correct: 0 },
+                { q: "Husnuzan kepada sesama manusia dalam kehidupan sehari-hari akan menciptakan suasana...", answers: ["Rukun, damai, dan penuh kasih sayang antar sesama", "Penuh permusuhan, rasa curiga, dan dendam"], correct: 0 },
+                { q: "Apabila ada pengumuman hasil nilai ujian di papan kelas, anak yang husnuzan akan...", answers: ["Mengucapkan selamat pada peringkat atas & bersyukur atas nilainya", "Mengejek dan menuduh teman lain tidak jujur"], correct: 0 },
+                { q: "Meyakini bahwa di balik setiap kesulitan pasti ada kemudahan adalah bentuk sikap...", answers: ["Husnuzan kepada takdir dan janji Allah Swt.", "Putus asa terhadap rahmat Allah Swt."], correct: 0 }
+            ],
+            sword: [
+                { q: "Manakah kata terpuji yang dapat mematahkan sikap berburuk sangka?", answers: ["Tabayyun & Husnuzan", "Ghibah & Suuzan"], correct: 0 },
+                { q: "Kalimat yang mencerminkan husnuzan kepada diri sendiri adalah...", answers: ["Aku pasti bisa jika mau berusaha dan berdoa", "Aku memang lemah dan tidak berguna"], correct: 0 },
+                { q: "Kata 'Suuzan' dalam ajaran Islam memiliki arti...", answers: ["Berburuk sangka / menduga jelek", "Berbaik sangka / menduga baik"], correct: 0 },
+                { q: "Kata yang berarti memverifikasi kabar berita secara santun adalah...", answers: ["Tabayyun", "Takabbur"], correct: 0 },
+                { q: "Sikap terpuji 'Husnu' artinya baik dan 'Zhan' artinya...", answers: ["Prasangka / dugaan", "Kemarahan / benci"], correct: 0 },
+                { q: "Sikap istiqamah dan berani membela kebenaran disebut...", answers: ["Syuja'ah", "Ananiyah"], correct: 0 },
+                { q: "Menjaga lisan dari membicarakan keburukan teman di belakangnya disebut menghindari...", answers: ["Ghibah & Prasangka Buruk", "Husnuzan & Tabayyun"], correct: 0 },
+                { q: "Lawan dari kata Suuzan (berburuk sangka) dalam istilah agama Islam adalah...", answers: ["Husnuzan (Berbaik Sangka)", "Takabbur (Sombong)"], correct: 0 },
+                { q: "Kalimat prasangka baik saat mendengar berita musibah adalah...", answers: ["Inna lillahi wa inna ilaihi raji'un, semoga ada hikmah terbaik", "Itu pasti hukuman karena dia sering nakal"], correct: 0 },
+                { q: "Manakah pasangan kata yang mengandung arti kejujuran dan dapat dipercaya?", answers: ["Siddiq & Amanah", "Kadzib & Khianat"], correct: 0 }
+            ],
+            puzzle: [
+                { q: "Susunan pengertian Husnuzan yang paling tepat adalah...", answers: ["Berbaik sangka kepada Allah, diri sendiri, dan sesama", "Mencurigai orang lain sebelum terbukti salah"], correct: 0 },
+                { q: "Kunci utama untuk menghindari perselisihan antar teman adalah...", answers: ["Saling berhusnuzan & melakukan tabayyun", "Saling menyalahkan dan berburuk sangka"], correct: 0 },
+                { q: "Hikmah utama memiliki sifat Husnuzan dalam hati adalah...", answers: ["Hati tenang, damai, dan dicintai teman", "Menjadi sombong dan meremehkan orang lain"], correct: 0 },
+                { q: "Contoh husnuzan kepada Allah Swt. saat menerima ujian adalah...", answers: ["Sabar, berikhtiar, dan yakin ada hikmahnya", "Mengeluh dan menyalahkan takdir"], correct: 0 },
+                { q: "Manakah ungkapan yang mencerminkan Husnuzan kepada sesama?", answers: ["Mungkin dia sedang ada halangan sehingga belum membalas pesan", "Dia pasti sengaja acuh dan tidak menyukaiku"], correct: 0 },
+                { q: "Urutan tindakan yang paling tepat saat menerima berita heboh tentang teman...", answers: ["Dengar berita ➔ Cek kebenaran (Tabayyun) ➔ Tetap berbaik sangka", "Dengar berita ➔ Langsung sebar ke grup ➔ Benci teman"], correct: 0 },
+                { q: "Manakah pernyataan yang paling tepat menggambarkan Husnuzan kepada Diri Sendiri?", answers: ["Yakin pada potensi diri dan pantang menyerah dalam belajar", "Selalu merasa bodoh dan enggan mencoba hal baru"], correct: 0 },
+                { q: "Manfaat utama membiasakan sikap prasangka baik dalam pertemanan adalah...", answers: ["Mencegah permusuhan dan mempererat tali persaudaraan", "Membuat kita disegani karena ditakuti teman"], correct: 0 },
+                { q: "Tindakan Tabayyun paling tepat ketika dituduh merusak barang sekolah...", answers: ["Bicara jujur dan menjelaskan kronologi sebenarnya dengan tenang", "Marah-marah dan balik menuduh teman lain"], correct: 0 },
+                { q: "Alasan utama mengapa Suuzan (berburuk sangka) dilarang dalam Surah Al-Hujurat ayat 12 adalah...", answers: ["Karena sebagian prasangka adalah dosa dan merusak persatuan", "Karena membuat pikiran kita makin tajam"], correct: 0 }
+            ],
+            rocket: [
+                { q: "Meskipun merayap pelan, siput terus maju. Sikap husnuzan kepada diri sendiri adalah...", answers: ["Pantang menyerah & terus berusaha", "Cepat putus asa saat menghadapi tantangan"], correct: 0 },
+                { q: "Saat hasil ujian belum sesuai harapan, anak yang berbaik sangka akan...", answers: ["Mengevaluasi cara belajar & giat berlatih", "Menyerah dan berhenti belajar"], correct: 0 },
+                { q: "Sabar dan konsisten dalam berbuat baik akan membuahkan...", answers: ["Keberkahan dan hasil yang indah dari Allah", "Kerugian dan rasa penyesalan"], correct: 0 },
+                { q: "Temanmu berjalan lambat saat membawa barang berat, sikapmu...", answers: ["Segera membantu dengan tulus", "Mengejek dan meninggalkannya di jalan"], correct: 0 },
+                { q: "Husnuzan mengajarkan kita bahwa proses belajar memerlukan...", answers: ["Kesabaran, ketekunan, dan doa", "Kecurangan agar cepat selesai"], correct: 0 },
+                { q: "Meskipun latihan membaca Al-Qur'an terasa sulit, anak yang husnuzan akan...", answers: ["Tekun mengulang ayat dengan yakin pasti bisa", "Berhenti mengaji dan menyalahkan keadaan"], correct: 0 },
+                { q: "Ketika teman melangkah perlahan saat piket kelas, sikap husnuzanmu...", answers: ["Membantunya bersama-sama agar kelas cepat bersih", "Mengetawainya dan melaporkannya dengan marah"], correct: 0 },
+                { q: "Anak yang memiliki sikap Husnuzan saat kalah berlari di lapangan akan...", answers: ["Mengucapkan selamat pada pemenang dan giat berlatih lagi", "Menuduh lawan curang tanpa bukti sama sekali"], correct: 0 },
+                { q: "Proses merayap menuju kesuksesan membutuhkan sikap husnuzan berupa...", answers: ["Kesabaran, keikhlasan, dan doa pantang menyerah", "Sifat pemalas dan mengharapkan keajaiban tanpa usaha"], correct: 0 },
+                { q: "Jika kamu belum hafal surat pendek untuk ujian besok, langkah husnuzanmu...", answers: ["Mulai mengulang hafalan dengan tenang dan berdoa", "Pasrah menangis dan tidak mau belajar lagi"], correct: 0 }
+            ],
+            dragon: [
+                { q: "Monster Suuzan berbisik agar kamu menuduh teman mengambil pensilmu. Lawan dengan...", answers: ["Mencari dulu dengan teliti dan bertanya baik-baik", "Langsung berteriak menuduh teman sebelah"], correct: 0 },
+                { q: "Senjata ampuh untuk menghancurkan sifat Suuzan (prasangka buruk) adalah...", answers: ["Husnuzan & Tabayyun", "Dendam & Prasangka"], correct: 0 },
+                { q: "Saat mendengar kabar burung tentang temanmu, cara mengalahkan Monster Suuzan...", answers: ["Menolak percaya sebelum ada bukti nyata (Tabayyun)", "Menyebarkan kabar itu ke seluruh kelas"], correct: 0 },
+                { q: "Rasa iri terhadap prestasi teman disukai Monster Suuzan. Kita melawannya dengan...", answers: ["Turut gembira & mendoakan kebaikan", "Menjelek-jelekkan kelebihan teman"], correct: 0 },
+                { q: "Monster Suuzan membuat kita merasa Allah tidak adil. Kita menundukkannya dengan...", answers: ["Selalu bersyukur atas nikmat sekecil apapun", "Terus mengeluh dan marah"], correct: 0 },
+                { q: "Monster Suuzan berbisik bahwa guru tidak adil memberi nilai. Senjata husnuzanmu...", answers: ["Bertanya sopan pada guru letak kekurangan tugas kita", "Protes dan membentak guru di depan teman-teman"], correct: 0 },
+                { q: "Saat Monster Suuzan mengajak kita iri melihat tas baru teman, kita kalahkan dengan...", answers: ["Bersyukur atas tas milik sendiri yang masih layak dipakai", "Memaksa orang tua membelikan tas yang lebih mahal"], correct: 0 },
+                { q: "Bisikan Monster Suuzan agar menuduh teman yang lewat saat penghapus hilang dilawan dengan...", answers: ["Mengecek kotak pensil dan kolong meja sendiri dulu", "Langsung menarik baju teman dan memaki"], correct: 0 },
+                { q: "Rasa cemas berlebihan akan kegagalan disukai Monster Suuzan. Obat husnuzannya adalah...", answers: ["Tawakal dan percaya Allah Mahapenyayang", "Terus melamun dan ketakutan tanpa bertindak"], correct: 0 },
+                { q: "Monster Suuzan akan hancur dan lari apabila hati seorang anak diisi dengan...", answers: ["Prasangka baik, zikir, dan kasih sayang", "Dendam, dengki, dan rasa amarah"], correct: 0 }
+            ],
+            star_hunt: [
+                { q: "Untuk mendapatkan Bintang Husnuzan kepada Allah Swt., kita harus...", answers: ["Menerima takdir-Nya dengan penuh prasangka baik", "Selalu ragu akan pertolongan Allah Swt."], correct: 0 },
+                { q: "Bintang Husnuzan kepada Diri Sendiri dapat diraih dengan...", answers: ["Yakin pada potensi diri yang dianugerahkan Allah", "Merasa diri paling bodoh dan tidak mampu"], correct: 0 },
+                { q: "Bintang Husnuzan kepada Sesama Manusia bersinar saat kita...", answers: ["Selalu melihat kebaikan pada diri orang lain", "Mencari-cari kesalahan dan keburukan teman"], correct: 0 },
+                { q: "Siswa yang mengumpulkan Bintang Kebaikan di sekolah selalu...", answers: ["Menjaga lisan dari ghibah dan prasangka buruk", "Sering memfitnah dan berprasangka jahat"], correct: 0 },
+                { q: "Pahala dan bintang keberkahan dari Allah Swt. diberikan kepada hamba yang...", answers: ["Berhati bersih dan berprasangka baik", "Berhati dengki dan penuh suuzan"], correct: 0 },
+                { q: "Bintang Husnuzan Kebanggaan diperoleh anak yang selalu...", answers: ["Menjaga lisannya dari prasangka buruk dan suka membantu", "Suka mencari-cari kesalahan orang lain"], correct: 0 },
+                { q: "Perbuatan yang menambah Bintang Keberkahan dalam keluarga adalah...", answers: ["Berbaik sangka dan menghormati keputusan orang tua", "Membangkang dan selalu curiga pada orang tua"], correct: 0 },
+                { q: "Bintang Husnuzan di sekolah bersinar terang saat siswa...", answers: ["Mendoakan kebaikan bagi teman-teman dan gurunya", "Mengejek kekurangan fisik atau kemampuan teman"], correct: 0 },
+                { q: "Cahaya Bintang Kebaikan akan membimbing anak muslim untuk selalu...", answers: ["Berpikir positif sebelum berucap dan bertindak", "Terburu-buru mengambil kesimpulan buruk"], correct: 0 },
+                { q: "Menghargai pendapat teman dalam diskusi kelompok akan membuahkan...", answers: ["Bintang Persahabatan dan Kerukunan Kelas", "Pertengkaran dan Musuh Baru"], correct: 0 }
+            ]
+        };
+
+        let vsActiveQuestions = [];
+
+        let audioCtx = null;
+        let audioStarted = false;
+
+        function playSound(type) {
+            if (gameState.audioMuted) return;
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                if (type === 'click') {
+                    osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+                    gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                    osc.start(); osc.stop(audioCtx.currentTime + 0.08);
+                } else if (type === 'correct') {
+                    osc.frequency.setValueAtTime(523, audioCtx.currentTime);
+                    osc.frequency.setValueAtTime(659, audioCtx.currentTime + 0.1);
+                    osc.frequency.setValueAtTime(783, audioCtx.currentTime + 0.2);
+                    gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                    osc.start(); osc.stop(audioCtx.currentTime + 0.35);
+                } else if (type === 'wrong') {
+                    osc.frequency.setValueAtTime(300, audioCtx.currentTime);
+                    osc.frequency.setValueAtTime(200, audioCtx.currentTime + 0.15);
+                    gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                    osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+                } else if (type === 'win') {
+                    osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+                    osc.frequency.setValueAtTime(554, audioCtx.currentTime + 0.1);
+                    osc.frequency.setValueAtTime(659, audioCtx.currentTime + 0.2);
+                    osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.3);
+                    gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                    osc.start(); osc.stop(audioCtx.currentTime + 0.5);
+                }
+            } catch (e) {
+                console.warn("Audio Context playback ignored:", e);
+            }
+        }
+
+        function forcePlayBgm() {
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+
+                const bgm = document.getElementById('bgm-player');
+                const banner = document.getElementById('audio-prompt-banner');
+                
+                gameState.audioMuted = false;
+                if (bgm) {
+                    bgm.muted = false;
+                    bgm.volume = 0.5;
+
+                    let playPromise = bgm.play();
+                    if (playPromise !== undefined) {
+                        playPromise.then(() => {
+                            audioStarted = true;
+                            if (banner) banner.classList.add('hidden');
+                            updateAudioButtonUI(true);
+                        }).catch(err => {
+                            console.warn("Autoplay ditahan browser, menunggu sentuhan pengguna:", err);
+                            audioStarted = false;
+                        });
+                    }
+                }
+            } catch (e) {
+                console.warn("BGM initialization safe catch:", e);
+            }
+        }
+
+        function unlockAudioOnFirstTouch() {
+            if (!audioStarted && !gameState.audioMuted) {
+                forcePlayBgm();
+            }
+        }
+
+        function updateAudioButtonUI(isPlaying) {
+            const btn = document.getElementById('audio-btn');
+            if (!btn) return;
+            if (isPlaying) {
+                btn.innerHTML = `<i class="fa-solid fa-volume-high text-emerald-400"></i>`;
+            } else {
+                btn.innerHTML = `<i class="fa-solid fa-volume-xmark text-rose-400"></i>`;
+            }
+        }
+
+        window.onload = function() {
+            try {
+                forcePlayBgm();
+            } catch(e){}
+
+            document.addEventListener('click', unlockAudioOnFirstTouch, { passive: true });
+            document.addEventListener('touchstart', unlockAudioOnFirstTouch, { passive: true });
+            document.addEventListener('keydown', unlockAudioOnFirstTouch, { passive: true });
+
+            triggerLoadingScreen(() => {
+                selectCharacter('rafi');
+            }, "Menyiapkan Desa Kebaikan...");
+        };
+
+        function forceHideLoading() {
+            const overlay = document.getElementById('loading-overlay');
+            if (overlay) {
+                overlay.classList.add('opacity-0', 'pointer-events-none');
+                setTimeout(() => {
+                    overlay.classList.add('hidden');
+                    showScreen('screen-char-select');
+                }, 200);
+            }
+        }
+
+        function triggerLoadingScreen(callback, message = "Memuat...") {
+            const overlay = document.getElementById('loading-overlay');
+            const bar = document.getElementById('loading-bar');
+            const perc = document.getElementById('loading-percentage');
+            const tip = document.getElementById('loading-tip');
+
+            if (tip) tip.innerText = `"${message}"`;
+            if (overlay) {
+                overlay.classList.remove('hidden', 'opacity-0', 'pointer-events-none');
+            }
+            if (bar) bar.style.width = '0%';
+            if (perc) perc.innerText = '0%';
+
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 20;
+                if (progress > 100) progress = 100;
+                if (bar) bar.style.width = `${progress}%`;
+                if (perc) perc.innerText = `${progress}%`;
+
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        if (overlay) overlay.classList.add('opacity-0', 'pointer-events-none');
+                        setTimeout(() => {
+                            if (overlay) overlay.classList.add('hidden');
+                            if (callback) callback();
+                        }, 300);
+                    }, 150);
+                }
+            }, 80);
+        }
+
+        function showScreen(screenId) {
+            playSound('click');
+            ['screen-char-select', 'screen-map', 'screen-gameplay', 'screen-vs-mode', 'screen-epilogue'].forEach(s => {
+                const el = document.getElementById(s);
+                if (el) el.classList.add('hidden');
+            });
+            const active = document.getElementById(screenId);
+            if (active) active.classList.remove('hidden');
+
+            updateHeaderUI();
+        }
+
+        function toggleAudio() {
+            gameState.audioMuted = !gameState.audioMuted;
+            const bgm = document.getElementById('bgm-player');
+            const btn = document.getElementById('audio-btn');
+            if (gameState.audioMuted) {
+                if (bgm) bgm.pause();
+                btn.innerHTML = `<i class="fa-solid fa-volume-xmark text-rose-400"></i>`;
+            } else {
+                if (bgm) bgm.play();
+                btn.innerHTML = `<i class="fa-solid fa-volume-high text-emerald-400"></i>`;
+            }
+        }
+
+        function selectCharacter(charKey) {
+            playSound('click');
+            gameState.selectedChar = charKey;
+            const rCard = document.getElementById('avatar-card-rafi');
+            const aCard = document.getElementById('avatar-card-aisyah');
+
+            if (rCard && aCard) {
+                if (charKey === 'rafi') {
+                    rCard.className = "avatar-card cursor-pointer bg-white border-4 border-amber-600 rounded-2xl p-2.5 w-32 sm:w-36 transition hover:scale-105 shadow-md text-center";
+                    aCard.className = "avatar-card cursor-pointer bg-white border-4 border-slate-300 rounded-2xl p-2.5 w-32 sm:w-36 transition hover:scale-105 shadow-md text-center opacity-70";
+                } else {
+                    rCard.className = "avatar-card cursor-pointer bg-white border-4 border-slate-300 rounded-2xl p-2.5 w-32 sm:w-36 transition hover:scale-105 shadow-md text-center opacity-70";
+                    aCard.className = "avatar-card cursor-pointer bg-white border-4 border-amber-600 rounded-2xl p-2.5 w-32 sm:w-36 transition hover:scale-105 shadow-md text-center";
+                }
+            }
+        }
+
+        function getPlayerBadge() {
+            const count = gameState.stars.filter(Boolean).length;
+            let badge = BADGES[0];
+            for (let b of BADGES) {
+                if (count >= b.threshold) badge = b;
+            }
+            return badge;
+        }
+
+        function updateHeaderUI() {
+            const hStatus = document.getElementById('header-status');
+            const charScreen = document.getElementById('screen-char-select');
+            if (charScreen && charScreen.classList.contains('hidden')) {
+                if (hStatus) hStatus.classList.remove('hidden');
+            } else {
+                if (hStatus) hStatus.classList.add('hidden');
+            }
+
+            const hName = document.getElementById('header-name');
+            if (hName) hName.innerText = gameState.playerName || "Pemain Solo";
+
+            const hAvatar = document.getElementById('header-avatar');
+            if (hAvatar) hAvatar.innerHTML = `<img src="${CHAR_AVATARS[gameState.selectedChar]}" class="w-6 h-6 rounded-full object-cover border border-amber-400" alt="Avatar">`;
+            
+            const badge = getPlayerBadge();
+            const hBadge = document.getElementById('header-badge');
+            if (hBadge) hBadge.innerText = `${badge.icon} ${badge.name}`;
+            
+            const starCount = gameState.stars.filter(Boolean).length;
+            const hStars = document.getElementById('header-stars');
+            if (hStars) hStars.innerText = `${starCount} / 6 ⭐`;
+
+            const hCoins = document.getElementById('header-coins');
+            if (hCoins) hCoins.innerText = `${gameState.coins} Koin`;
+
+            const hXp = document.getElementById('header-xp');
+            if (hXp) hXp.innerText = `${gameState.xp} XP`;
+        }
+
+        function startJourney() {
+            const nameInput = document.getElementById('player-name-input');
+            const absenInput = document.getElementById('player-absen-input');
+            const classInput = document.getElementById('player-class-input');
+
+            const name = nameInput ? nameInput.value.trim() : "";
+            const absen = absenInput ? absenInput.value.trim() : "";
+            const pClass = classInput ? classInput.value.trim() : "";
+
+            if (!name) {
+                showNotice("Nama Diperlukan!", "Silakan masukkan nama lengkapmu terlebih dahulu sebelum mulai bertualang!", "⚠️");
+                return;
+            }
+
+            gameState.playerName = name;
+            gameState.playerAbsen = absen || "-";
+            gameState.playerClass = pClass || "Kelas 3";
+
+            triggerLoadingScreen(() => {
+                showScreen('screen-map');
+                updateMapUI();
+                syncDataToGoogleSheets();
+            }, `Membuka Gerbang Peta Desa Kebaikan untuk ${name}...`);
+        }
+
+        function updateMapUI() {
+            const starCount = gameState.stars.filter(Boolean).length;
+            const mapProgText = document.getElementById('map-progress-text');
+            if (mapProgText) mapProgText.innerText = `${starCount} Dari 6 Wilayah`;
+
+            for (let i = 1; i <= 6; i++) {
+                const btn = document.getElementById(`btn-level-${i}`);
+                const starEl = document.getElementById(`star-lvl-${i}`);
+
+                if (btn && starEl) {
+                    if (i <= gameState.unlockedLevel) {
+                        btn.className = "bg-slate-700 border-2 border-emerald-500 p-3.5 rounded-2xl text-white font-bold cursor-pointer hover:scale-105 transition shadow-lg relative overflow-hidden";
+                        starEl.innerHTML = gameState.stars[i - 1] ? "⭐" : "✨";
+                    } else {
+                        btn.className = "bg-slate-800 border-2 border-slate-600 p-3.5 rounded-2xl text-slate-400 opacity-60 cursor-not-allowed transition shadow relative overflow-hidden";
+                        starEl.innerHTML = "🔒";
+                    }
+                }
+            }
+
+            const badge = getPlayerBadge();
+            const badgeIcon = document.getElementById('current-badge-icon');
+            const badgeText = document.getElementById('current-badge-text');
+            if (badgeIcon) badgeIcon.innerText = badge.icon;
+            if (badgeText) badgeText.innerText = badge.name;
+        }
+
+        function startCurrentUnlockedLevel() {
+            loadLevel(gameState.unlockedLevel);
+        }
+
+        function loadLevel(lvlNum) {
+            if (lvlNum > gameState.unlockedLevel) {
+                showNotice("Wilayah Terkunci!", "Selesaikan wilayah sebelumnya terlebih dahulu untuk membuka wilayah ini!", "🔒");
+                return;
+            }
+
+            gameState.currentLevel = lvlNum;
+            triggerLoadingScreen(() => {
+                showScreen('screen-gameplay');
+                setupGameplayLevel(lvlNum);
+            }, `Memasuki Wilayah ${lvlNum}...`);
+        }
+
+        let levelState = {};
+
+        function setupGameplayLevel(lvlNum) {
+            const area = document.getElementById('gameplay-area');
+            const badge = document.getElementById('level-badge');
+            const title = document.getElementById('level-title');
+            const prog = document.getElementById('question-progress');
+
+            if (badge) badge.innerText = `WILAYAH ${lvlNum}`;
+
+            if (lvlNum === 1) {
+                if (title) title.innerText = "🌳 Hutan Prasangka (Cari 4 Benda Tersembunyi)";
+                if (prog) prog.innerText = "0 / 4 Benda";
+                levelState = { foundCount: 0 };
+
+                area.innerHTML = `
+                    <div class="w-full text-center max-w-xl">
+                        <p class="text-xs sm:text-sm text-amber-200 mb-3 bg-slate-800 p-2 rounded-xl border border-amber-500/40">
+                            🔎 Cari dan klik 4 Benda Kebaikan (Bintang ⭐, Lentera 🏮, Kitab 📖, Cermin 🪞) yang tersembunyi di Hutan Prasangka!
+                        </p>
+                        <div class="relative w-full h-64 bg-emerald-950 rounded-2xl border-4 border-amber-600 overflow-hidden shadow-inner flex items-center justify-center bg-cover bg-center" style="background-image: linear-gradient(to bottom, rgba(6,78,59,0.7), rgba(2,44,34,0.9));">
+                            <span class="absolute top-4 left-6 text-4xl opacity-40">🌲</span>
+                            <span class="absolute top-8 right-10 text-5xl opacity-40">🌳</span>
+                            <span class="absolute bottom-6 left-12 text-5xl opacity-30">🌿</span>
+                            <span class="absolute bottom-4 right-16 text-4xl opacity-30">🎋</span>
+
+                            <button id="item-1" onclick="findHiddenItem(1, 'Bintang Kebaikan ⭐')" class="hidden-item-spot absolute top-10 left-20 text-3xl p-2 bg-slate-900/60 rounded-full border border-amber-400">⭐</button>
+                            <button id="item-2" onclick="findHiddenItem(2, 'Lentera Petunjuk 🏮')" class="hidden-item-spot absolute top-28 right-24 text-3xl p-2 bg-slate-900/60 rounded-full border border-amber-400">🏮</button>
+                            <button id="item-3" onclick="findHiddenItem(3, 'Kitab Tabayyun 📖')" class="hidden-item-spot absolute bottom-12 left-32 text-3xl p-2 bg-slate-900/60 rounded-full border border-amber-400">📖</button>
+                            <button id="item-4" onclick="findHiddenItem(4, 'Cermin Jernih 🪞')" class="hidden-item-spot absolute bottom-8 right-28 text-3xl p-2 bg-slate-900/60 rounded-full border border-amber-400">🪞</button>
+                        </div>
+                    </div>
+                `;
+            } else if (lvlNum === 2) {
+                if (title) title.innerText = "🌉 Jembatan Husnuzan (Kuis Pilihan Ganda)";
+                levelState = { qIndex: 0, score: 0 };
+                renderLevel2Quiz();
+            } else if (lvlNum === 3) {
+                if (title) title.innerText = "🕳️ Gua Suuzan (Pisahkan Perilaku)";
+                levelState = { index: 0, items: [
+                    { text: "Berpikir positif saat teman terlambat", type: "husnuzan" },
+                    { text: "Menuduh teman mencontek saat juara", type: "suuzan" },
+                    { text: "Bertanya baik-baik saat pensil hilang", type: "husnuzan" },
+                    { text: "Curiga teman sengaja menjatuhkan buku", type: "suuzan" }
+                ]};
+                renderLevel3Sorting();
+            } else if (lvlNum === 4) {
+                if (title) title.innerText = "🏘️ Desa Persahabatan (Pilih Tindakan Tepat)";
+                levelState = { qIndex: 0 };
+                renderLevel4Scenarios();
+            } else if (lvlNum === 5) {
+                if (title) title.innerText = "🏰 Istana Husnuzan (Battle vs Monster Suuzan)";
+                levelState = { bossHP: 100, qIndex: 0 };
+                renderLevel5BossBattle();
+            } else if (lvlNum === 6) {
+                if (title) title.innerText = "👑 Tahta Kebaikan (Ujian Final 5 Soal)";
+                levelState = { qIndex: 0, correctCount: 0 };
+                renderLevel6FinalExam();
+            }
+        }
+
+        function findHiddenItem(id, name) {
+            playSound('correct');
+            const btn = document.getElementById(`item-${id}`);
+            if (btn) {
+                btn.disabled = true;
+                btn.style.opacity = '0.3';
+                btn.style.transform = 'scale(0.8)';
+            }
+            levelState.foundCount++;
+            const prog = document.getElementById('question-progress');
+            if (prog) prog.innerText = `${levelState.foundCount} / 4 Benda`;
+
+            if (levelState.foundCount >= 4) {
+                completeCurrentLevel();
+            }
+        }
+
+        const lvl2QuizData = [
+            { q: "Husnuzan berasal dari bahasa Arab yang artinya...", a: ["Berbaik Sangka", "Berburuk Sangka", "Iri Hati"], c: 0 },
+            { q: "Langkah klarifikasi mencari kebenaran berita disebut...", a: ["Tabayyun", "Suuzan", "Ghibah"], c: 0 },
+            { q: "Mendengar kabar burung tentang teman, sebaiknya...", a: ["Tabayyun dulu", "Langsung percaya", "Marah-marah"], c: 0 }
+        ];
+
+        function renderLevel2Quiz() {
+            const prog = document.getElementById('question-progress');
+            if (prog) prog.innerText = `${levelState.qIndex + 1} / ${lvl2QuizData.length}`;
+            const data = lvl2QuizData[levelState.qIndex];
+
+            const area = document.getElementById('gameplay-area');
+            area.innerHTML = `
+                <div class="max-w-lg w-full bg-slate-800 border-2 border-emerald-500 rounded-2xl p-5 text-center">
+                    <span class="text-xs text-amber-400 font-extrabold block mb-1">SOAL KUIS JEMBATAN</span>
+                    <h4 class="text-base font-bold text-white mb-4">"${data.q}"</h4>
+                    <div class="space-y-2">
+                        ${data.a.map((ans, idx) => `
+                            <button onclick="answerLvl2Quiz(${idx})" class="w-full text-left bg-slate-700 hover:bg-slate-600 border border-slate-500 hover:border-amber-400 p-3 rounded-xl transition font-bold text-xs sm:text-sm">
+                                ${String.fromCharCode(65 + idx)}. ${ans}
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function answerLvl2Quiz(idx) {
+            const data = lvl2QuizData[levelState.qIndex];
+            if (idx === data.c) {
+                playSound('correct');
+                levelState.qIndex++;
+                if (levelState.qIndex >= lvl2QuizData.length) {
+                    completeCurrentLevel();
+                } else {
+                    renderLevel2Quiz();
+                }
+            } else {
+                playSound('wrong');
+                showNotice("Jawaban Kurang Tepat!", "Coba pikirkan lagi sikap Husnuzan yang paling mulia ya!", "❌");
+            }
+        }
+
+        function renderLevel3Sorting() {
+            const area = document.getElementById('gameplay-area');
+            const item = levelState.items[levelState.index];
+            const prog = document.getElementById('question-progress');
+            if (prog) prog.innerText = `${levelState.index + 1} / ${levelState.items.length}`;
+
+            area.innerHTML = `
+                <div class="max-w-md w-full bg-slate-800 border-2 border-purple-500 rounded-2xl p-5 text-center">
+                    <span class="text-xs text-purple-300 font-extrabold block mb-2">KARTU PERILAKU</span>
+                    <div class="bg-amber-100 text-amber-950 p-4 rounded-xl font-extrabold text-sm mb-5 shadow-md">
+                        "${item.text}"
+                    </div>
+                    <p class="text-xs text-slate-300 mb-4">Pilih wadah yang tepat untuk kartu di atas:</p>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="sortLvl3Item('husnuzan')" class="game-btn game-btn-green p-3 rounded-xl font-black text-xs">
+                            🟢 HUSNUZAN<br><span class="text-[10px] font-normal">(Berbaik Sangka)</span>
+                        </button>
+                        <button onclick="sortLvl3Item('suuzan')" class="game-btn game-btn-red p-3 rounded-xl font-black text-xs">
+                            🔴 SUUZAN<br><span class="text-[10px] font-normal">(Berburuk Sangka)</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function sortLvl3Item(chosenType) {
+            const item = levelState.items[levelState.index];
+            if (chosenType === item.type) {
+                playSound('correct');
+                levelState.index++;
+                if (levelState.index >= levelState.items.length) {
+                    completeCurrentLevel();
+                } else {
+                    renderLevel3Sorting();
+                }
+            } else {
+                playSound('wrong');
+                showNotice("Kategori Keliru!", "Periksa kembali apakah perilaku tersebut termasuk Husnuzan (Baik) atau Suuzan (Buruk)!", "⚠️");
+            }
+        }
+
+        const lvl4Scenarios = [
+            { scenario: "Temanmu belum mengembalikan buku cerita yang dipinjamnya.", choices: [
+                { text: "Bertanya sopan kapan buku bisa dikembalikan (Husnuzan/Tabayyun)", correct: true },
+                { text: "Menuduh teman ingin mencuri buku tersebut", correct: false }
+            ]},
+            { scenario: "Guru memberikan tugas kelompok dan kamu belum mendapat pasangan.", choices: [
+                { text: "Tersenyum dan meminta izin bergabung dengan kelompok lain dengan santun", correct: true },
+                { text: "Marah dan menganggap teman-teman tidak menyukaimu", correct: false }
+            ]}
+        ];
+
+        function renderLevel4Scenarios() {
+            const area = document.getElementById('gameplay-area');
+            const item = lvl4Scenarios[levelState.qIndex];
+            const prog = document.getElementById('question-progress');
+            if (prog) prog.innerText = `${levelState.qIndex + 1} / ${lvl4Scenarios.length}`;
+
+            area.innerHTML = `
+                <div class="max-w-lg w-full bg-slate-800 border-2 border-sky-500 rounded-2xl p-5 text-center">
+                    <span class="text-xs text-sky-300 font-extrabold block mb-1">SITUASI SOSIAL</span>
+                    <h4 class="text-sm font-bold text-white mb-4 bg-slate-900 p-3 rounded-xl border border-sky-500/40">"${item.scenario}"</h4>
+                    <div class="space-y-2.5">
+                        ${item.choices.map((c, idx) => `
+                            <button onclick="answerLvl4Scenario(${c.correct})" class="w-full text-left bg-slate-700 hover:bg-slate-600 border border-slate-500 p-3 rounded-xl font-bold text-xs leading-relaxed">
+                                ${idx + 1}. ${c.text}
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function answerLvl4Scenario(isCorrect) {
+            if (isCorrect) {
+                playSound('correct');
+                levelState.qIndex++;
+                if (levelState.qIndex >= lvl4Scenarios.length) {
+                    completeCurrentLevel();
+                } else {
+                    renderLevel4Scenarios();
+                }
+            } else {
+                playSound('wrong');
+                showNotice("Tindakan Kurang Tepat!", "Pilihlah solusi yang penuh kedamaian dan prasangka baik!", "❌");
+            }
+        }
+
+        const lvl5Questions = [
+            { q: "Manakah contoh sikap Husnuzan kepada Allah Swt.?", a: ["Selalu bersyukur dan sabar saat diuji", "Mengeluh setiap dapat tantangan"], c: 0 },
+            { q: "Husnuzan kepada diri sendiri ditunjukkan dengan...", a: ["Percaya diri & giat belajar", "Putus asa dan malas belajar"], c: 0 }
+        ];
+
+        function renderLevel5BossBattle() {
+            const area = document.getElementById('gameplay-area');
+            const qData = lvl5Questions[levelState.qIndex];
+            const prog = document.getElementById('question-progress');
+            if (prog) prog.innerText = `Boss HP: ${levelState.bossHP}%`;
+
+            area.innerHTML = `
+                <div class="max-w-lg w-full bg-slate-800 border-2 border-rose-500 rounded-2xl p-5 text-center">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-4xl animate-pulse">👹</span>
+                        <div class="w-full mx-3 bg-slate-950 rounded-full h-4 border border-rose-500 overflow-hidden">
+                            <div class="bg-rose-600 h-full transition-all duration-300" style="width: ${levelState.bossHP}%"></div>
+                        </div>
+                        <span class="text-xs font-black text-rose-400">${levelState.bossHP} HP</span>
+                    </div>
+
+                    <h4 class="text-sm font-bold text-white mb-4 bg-slate-900 p-3 rounded-xl border border-rose-500/40">"${qData.q}"</h4>
+                    <div class="space-y-2">
+                        ${qData.a.map((ans, idx) => `
+                            <button onclick="answerLvl5Boss(${idx})" class="w-full text-left bg-slate-700 hover:bg-slate-600 border border-slate-500 p-3 rounded-xl font-bold text-xs">
+                                ⚔️ ${ans}
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function answerLvl5Boss(idx) {
+            const qData = lvl5Questions[levelState.qIndex];
+            if (idx === qData.c) {
+                playSound('correct');
+                levelState.bossHP -= 50;
+                levelState.qIndex++;
+                if (levelState.bossHP <= 0 || levelState.qIndex >= lvl5Questions.length) {
+                    completeCurrentLevel();
+                } else {
+                    renderLevel5BossBattle();
+                }
+            } else {
+                playSound('wrong');
+                showNotice("Serangan Meleset!", "Monster Suuzan menyerang balik! Pilih jawaban Husnuzan yang benar!", "💥");
+            }
+        }
+
+        const finalExamQuestions = [
+            { q: "Husnuzan artinya berbaik sangka, sedangkan Suuzan artinya...", a: ["Berburuk Sangka", "Berbaik Hati"], c: 0 },
+            { q: "Jika mendengar kabar tidak pasti tentang teman, kita harus melakukan...", a: ["Tabayyun (Klarifikasi)", "Langsung Marah"], c: 0 },
+            { q: "Selalu bersyukur atas nikmat Allah Swt. termasuk Husnuzan kepada...", a: ["Allah Swt.", "Diri Sendiri"], c: 0 },
+            { q: "Pantang menyerah dan giat belajar adalah contoh Husnuzan kepada...", a: ["Diri Sendiri", "Musuh"], c: 0 },
+            { q: "Sikap utama saat teman mendapatkan juara ujian adalah...", a: ["Mengucapkan selamat & merasa senang", "Iri hati & curiga"], c: 0 }
+        ];
+
+        function renderLevel6FinalExam() {
+            const area = document.getElementById('gameplay-area');
+            const qData = finalExamQuestions[levelState.qIndex];
+            const prog = document.getElementById('question-progress');
+            if (prog) prog.innerText = `${levelState.qIndex + 1} / 5 Soal`;
+
+            area.innerHTML = `
+                <div class="max-w-lg w-full bg-slate-800 border-2 border-amber-500 rounded-2xl p-5 text-center">
+                    <span class="text-xs text-amber-300 font-extrabold block mb-1">SOAL UJIAN TAHTA KEBAIKAN</span>
+                    <h4 class="text-sm sm:text-base font-bold text-white mb-4 bg-slate-900 p-3 rounded-xl border border-amber-500/40">"${qData.q}"</h4>
+                    <div class="space-y-2">
+                        ${qData.a.map((ans, idx) => `
+                            <button onclick="answerLevel6Final(${idx})" class="w-full text-left bg-slate-700 hover:bg-slate-600 border border-amber-500/50 hover:border-amber-400 p-3.5 rounded-xl font-bold text-xs sm:text-sm">
+                                👑 ${ans}
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function answerLevel6Final(idx) {
+            const qData = finalExamQuestions[levelState.qIndex];
+            if (idx === qData.c) {
+                playSound('correct');
+                levelState.correctCount++;
+            } else {
+                playSound('wrong');
+            }
+
+            levelState.qIndex++;
+            if (levelState.qIndex >= finalExamQuestions.length) {
+                completeCurrentLevel();
+            } else {
+                renderLevel6FinalExam();
+            }
+        }
+
+        function completeCurrentLevel() {
+            playSound('win');
+            if (typeof confetti === 'function') {
+                confetti({ particleCount: 90, spread: 70, origin: { y: 0.6 } });
+            }
+
+            const current = gameState.currentLevel;
+            gameState.stars[current - 1] = true;
+            gameState.coins += 20;
+            gameState.xp += 50;
+            gameState.totalScore += 100;
+
+            if (current < 6 && gameState.unlockedLevel === current) {
+                gameState.unlockedLevel = current + 1;
+            }
+
+            syncDataToGoogleSheets();
+
+            const modal = document.getElementById('feedback-modal');
+            if (modal) modal.classList.remove('hidden');
+        }
+
+        function closeFeedbackAndContinue() {
+            playSound('click');
+            const modal = document.getElementById('feedback-modal');
+            if (modal) modal.classList.add('hidden');
+
+            if (gameState.currentLevel >= 6) {
+                showEpilogueScreen();
+            } else {
+                showScreen('screen-map');
+                updateMapUI();
+            }
+        }
+
+        function showEpilogueScreen() {
+            showScreen('screen-epilogue');
+            if (typeof confetti === 'function') {
+                confetti({ particleCount: 150, spread: 100, origin: { y: 0.5 } });
+            }
+
+            const nameEl = document.getElementById('cert-player-name');
+            const detailEl = document.getElementById('cert-player-detail');
+            const scoreEl = document.getElementById('cert-score-text');
+            const rewardEl = document.getElementById('cert-reward-text');
+            const dateEl = document.getElementById('cert-date-text');
+
+            if (nameEl) nameEl.innerText = gameState.playerName || "Pahlawan Kebaikan";
+            if (detailEl) detailEl.innerText = `No. Absen: ${gameState.playerAbsen} • Kelas: ${gameState.playerClass}`;
+            if (scoreEl) scoreEl.innerText = `${gameState.totalScore} Poin`;
+            if (rewardEl) rewardEl.innerText = `${gameState.coins} 🪙 • ${gameState.xp} XP`;
+
+            const today = new Date().toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
+            if (dateEl) dateEl.innerText = today;
+        }
+
+        function selectVsMatchMode(modeKey) {
+            playSound('click');
+            vsState.selectedVsGame = modeKey;
+            
+            const modes = ['castle', 'sword', 'puzzle', 'rocket', 'dragon', 'star_hunt'];
+            modes.forEach(m => {
+                const el = document.getElementById(`match-card-${m}`);
+                if (el) {
+                    el.classList.remove('vs-card-selected', 'border-amber-500', 'bg-amber-950');
+                    el.classList.add('border-slate-600', 'bg-slate-700');
+                }
+            });
+
+            const activeCard = document.getElementById(`match-card-${modeKey}`);
+            if (activeCard) {
+                activeCard.classList.remove('border-slate-600', 'bg-slate-700');
+                activeCard.classList.add('vs-card-selected');
+            }
+        }
+
+        function selectVsChar(playerNum, charKey) {
+            playSound('click');
+            if (playerNum === 1) {
+                vsState.p1Avatar = charKey;
+                const r1 = document.getElementById('vs-p1-rafi');
+                const a1 = document.getElementById('vs-p1-aisyah');
+                if (r1) r1.className = charKey === 'rafi' ? "px-2.5 py-1 rounded-lg font-bold text-[11px] bg-sky-500 text-white border-2 border-sky-600 flex items-center gap-1" : "px-2.5 py-1 rounded-lg font-bold text-[11px] bg-slate-200 text-slate-700 flex items-center gap-1";
+                if (a1) a1.className = charKey === 'aisyah' ? "px-2.5 py-1 rounded-lg font-bold text-[11px] bg-sky-500 text-white border-2 border-sky-600 flex items-center gap-1" : "px-2.5 py-1 rounded-lg font-bold text-[11px] bg-slate-200 text-slate-700 flex items-center gap-1";
+            } else {
+                vsState.p2Avatar = charKey;
+                const r2 = document.getElementById('vs-p2-rafi');
+                const a2 = document.getElementById('vs-p2-aisyah');
+                if (r2) r2.className = charKey === 'rafi' ? "px-2.5 py-1 rounded-lg font-bold text-[11px] bg-slate-200 text-slate-700 flex items-center gap-1" : "px-2.5 py-1 rounded-lg font-bold text-[11px] bg-pink-500 text-white border-2 border-pink-600 flex items-center gap-1";
+                if (a2) a2.className = charKey === 'aisyah' ? "px-2.5 py-1 rounded-lg font-bold text-[11px] bg-slate-200 text-slate-700 flex items-center gap-1" : "px-2.5 py-1 rounded-lg font-bold text-[11px] bg-pink-500 text-white border-2 border-pink-600 flex items-center gap-1";
+            }
+        }
+
+        function startVsRace() {
+            const p1Input = document.getElementById('p1-name-input');
+            const p2Input = document.getElementById('p2-name-input');
+            const p1 = p1Input ? p1Input.value.trim() : "Pemain 1";
+            const p2 = p2Input ? p2Input.value.trim() : "Pemain 2";
+
+            vsState.p1Name = p1 || "Pemain 1";
+            vsState.p2Name = p2 || "Pemain 2";
+            vsState.p1Pos = 0;
+            vsState.p2Pos = 0;
+            vsState.currentTurn = 1;
+            vsState.qIndex = 0;
+
+            vsActiveQuestions = vsQuestionsByMode[vsState.selectedVsGame] || vsQuestionsByMode.castle;
+
+            closeModal('modal-vs-setup');
+
+            const cfg = vsMatchConfigs[vsState.selectedVsGame] || vsMatchConfigs.castle;
+            const vsHeaderIcon = document.getElementById('vs-game-header-icon');
+            const vsHeaderTitle = document.getElementById('vs-game-header-title');
+            const vsHeaderSub = document.getElementById('vs-game-header-subtitle');
+
+            if (vsHeaderIcon) vsHeaderIcon.innerText = cfg.icon;
+            if (vsHeaderTitle) vsHeaderTitle.innerText = cfg.title;
+            if (vsHeaderSub) vsHeaderSub.innerText = cfg.subtitle;
+
+            triggerLoadingScreen(() => {
+                showScreen('screen-vs-mode');
+                renderVsTurn();
+            }, `Menyiapkan ${cfg.title}...`);
+        }
+
+        function renderVsTurn() {
+            if (vsState.qIndex >= vsActiveQuestions.length) {
+                finishVsRace();
+                return;
+            }
+
+            const activeName = vsState.currentTurn === 1 ? vsState.p1Name : vsState.p2Name;
+            const activeKey = vsState.currentTurn === 1 ? vsState.p1Avatar : vsState.p2Avatar;
+            const activeAvatarUrl = CHAR_AVATARS[activeKey] || CHAR_AVATARS.rafi;
+            const banner = document.getElementById('vs-turn-banner');
+
+            if (banner) {
+                if (vsState.currentTurn === 1) {
+                    banner.className = "bg-gradient-to-r from-sky-600 to-blue-700 text-white text-center py-2 px-4 rounded-xl font-extrabold text-sm sm:text-base border border-sky-400 shadow-md mb-3 flex items-center justify-center space-x-2";
+                } else {
+                    banner.className = "bg-gradient-to-r from-pink-600 to-rose-700 text-white text-center py-2 px-4 rounded-xl font-extrabold text-sm sm:text-base border border-pink-400 shadow-md mb-3 flex items-center justify-center space-x-2";
+                }
+            }
+
+            const turnAv = document.getElementById('vs-turn-avatar');
+            const turnNm = document.getElementById('vs-turn-name');
+            const qCount = document.getElementById('vs-question-counter');
+            const qTxt = document.getElementById('vs-question-text');
+
+            if (turnAv) turnAv.innerHTML = `<img src="${activeAvatarUrl}" class="w-7 h-7 rounded-full object-cover border-2 border-white shadow-sm inline-block" alt="Avatar">`;
+            if (turnNm) turnNm.innerText = activeName;
+            if (qCount) qCount.innerText = `Soal ${vsState.qIndex + 1} / ${vsActiveQuestions.length}`;
+
+            const currentQ = vsActiveQuestions[vsState.qIndex];
+            if (qTxt) qTxt.innerText = `"${currentQ.q}"`;
+
+            const box = document.getElementById('vs-answers-box');
+            if (box) {
+                box.innerHTML = "";
+                currentQ.answers.forEach((ansText, idx) => {
+                    const btn = document.createElement('button');
+                    btn.className = "w-full text-left bg-slate-800 hover:bg-slate-700 border-2 border-slate-600 hover:border-amber-400 p-3.5 rounded-xl transition text-white font-bold text-xs sm:text-sm shadow-md flex items-center justify-between";
+                    btn.onclick = () => answerVsQuestion(idx);
+                    btn.innerHTML = `<span>${ansText}</span><span class="text-amber-400 text-sm font-black">${vsMatchConfigs[vsState.selectedVsGame].icon}</span>`;
+                    box.appendChild(btn);
+                });
+            }
+
+            drawVsArenaCanvas();
+        }
+
+        function answerVsQuestion(ansIdx) {
+            const currentQ = vsActiveQuestions[vsState.qIndex];
+            if (ansIdx === currentQ.correct) {
+                playSound('correct');
+                if (vsState.currentTurn === 1) vsState.p1Pos += 45;
+                else vsState.p2Pos += 45;
+            } else {
+                playSound('wrong');
+            }
+
+            vsState.currentTurn = vsState.currentTurn === 1 ? 2 : 1;
+            vsState.qIndex++;
+            renderVsTurn();
+        }
+
+        function drawVsArenaCanvas() {
+            const canvas = document.getElementById('vs-arena-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width;
+            const h = canvas.height;
+            const mode = vsState.selectedVsGame;
+
+            ctx.clearRect(0, 0, w, h);
+
+            if (mode === 'castle') {
+                ctx.fillStyle = '#064e3b'; ctx.fillRect(0, 0, w, h);
+                ctx.fillStyle = '#022c22'; ctx.fillRect(0, 40, w - 90, 120);
+
+                ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 3;
+                ctx.beginPath(); ctx.moveTo(0, 40); ctx.lineTo(w - 90, 40); ctx.moveTo(0, 160); ctx.lineTo(w - 90, 160); ctx.stroke();
+
+                ctx.fillStyle = '#fef08a'; ctx.fillRect(w - 90, 20, 90, 160);
+                ctx.fillStyle = '#78350f'; ctx.font = 'bold 38px sans-serif'; ctx.fillText('🏰', w - 75, 110);
+
+                const p1X = Math.min(30 + vsState.p1Pos, w - 130);
+                ctx.font = '32px sans-serif'; ctx.fillText('🛡️⚔️', p1X, 85);
+                ctx.fillStyle = '#38bdf8'; ctx.font = 'bold 12px Fredoka'; ctx.fillText(`${vsState.p1Name}`, p1X, 55);
+
+                const p2X = Math.min(30 + vsState.p2Pos, w - 130);
+                ctx.font = '32px sans-serif'; ctx.fillText('🛡️⚔️', p2X, 145);
+                ctx.fillStyle = '#f472b6'; ctx.font = 'bold 12px Fredoka'; ctx.fillText(`${vsState.p2Name}`, p2X, 115);
+
+            } else if (mode === 'sword') {
+                ctx.fillStyle = '#1e1b4b'; ctx.fillRect(0, 0, w, h);
+                ctx.font = '55px sans-serif'; ctx.fillText('👹', w - 110, 120);
+                ctx.fillStyle = '#f87171'; ctx.font = 'bold 12px Fredoka'; ctx.fillText('Monster Prasangka', w - 130, 45);
+
+                const p1X = Math.min(30 + vsState.p1Pos, w - 180);
+                ctx.font = '32px sans-serif'; ctx.fillText('🤺🗡️', p1X, 80);
+                ctx.fillStyle = '#38bdf8'; ctx.font = 'bold 12px Fredoka'; ctx.fillText(vsState.p1Name, p1X, 50);
+
+                const p2X = Math.min(30 + vsState.p2Pos, w - 180);
+                ctx.font = '32px sans-serif'; ctx.fillText('🤺🗡️', p2X, 150);
+                ctx.fillStyle = '#f472b6'; ctx.font = 'bold 12px Fredoka'; ctx.fillText(vsState.p2Name, p2X, 120);
+
+            } else if (mode === 'puzzle') {
+                ctx.fillStyle = '#312e81'; ctx.fillRect(0, 0, w, h);
+                ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 2; ctx.strokeRect(10, 10, w - 20, h - 20);
+
+                ctx.fillStyle = '#38bdf8'; ctx.font = 'bold 14px Fredoka'; 
+                ctx.fillText(`🧩 ${vsState.p1Name}: ${Math.floor(vsState.p1Pos / 20)}/10 Katakunci`, 30, 60);
+                for (let i = 0; i < Math.min(vsState.p1Pos / 15, 10); i++) {
+                    ctx.fillStyle = '#0284c7'; ctx.fillRect(30 + (i * 35), 70, 30, 25);
+                    ctx.fillStyle = '#ffffff'; ctx.font = 'bold 12px sans-serif'; ctx.fillText('✨', 38 + (i * 35), 87);
+                }
+
+                ctx.fillStyle = '#f472b6'; ctx.font = 'bold 14px Fredoka'; 
+                ctx.fillText(`🧩 ${vsState.p2Name}: ${Math.floor(vsState.p2Pos / 20)}/10 Katakunci`, 30, 130);
+                for (let i = 0; i < Math.min(vsState.p2Pos / 15, 10); i++) {
+                    ctx.fillStyle = '#db2777'; ctx.fillRect(30 + (i * 35), 140, 30, 25);
+                    ctx.fillStyle = '#ffffff'; ctx.font = 'bold 12px sans-serif'; ctx.fillText('✨', 38 + (i * 35), 157);
+                }
+
+            } else if (mode === 'rocket') {
+                ctx.fillStyle = '#064e3b'; ctx.fillRect(0, 0, w, h);
+                ctx.fillStyle = '#14532d'; ctx.fillRect(10, 25, w - 100, 150);
+                
+                ctx.strokeStyle = '#22c55e'; ctx.lineWidth = 2;
+                ctx.beginPath(); ctx.moveTo(10, 100); ctx.lineTo(w - 100, 100); ctx.stroke();
+
+                ctx.fillStyle = '#fef08a'; ctx.fillRect(w - 90, 20, 80, 160);
+                ctx.fillStyle = '#78350f'; ctx.font = 'bold 36px sans-serif'; ctx.fillText('🏁', w - 70, 110);
+
+                const p1X = Math.min(20 + vsState.p1Pos, w - 130);
+                ctx.font = '36px sans-serif'; ctx.fillText('🐌🍃', p1X, 80);
+                ctx.fillStyle = '#38bdf8'; ctx.font = 'bold 12px Fredoka'; ctx.fillText(`${vsState.p1Name} (${Math.round(vsState.p1Pos/5)}m)`, p1X, 46);
+
+                const p2X = Math.min(20 + vsState.p2Pos, w - 130);
+                ctx.font = '36px sans-serif'; ctx.fillText('🐌🍃', p2X, 155);
+                ctx.fillStyle = '#f472b6'; ctx.font = 'bold 12px Fredoka'; ctx.fillText(`${vsState.p2Name} (${Math.round(vsState.p2Pos/5)}m)`, p2X, 121);
+
+            } else if (mode === 'dragon') {
+                ctx.fillStyle = '#4c0519'; ctx.fillRect(0, 0, w, h);
+
+                ctx.font = '65px sans-serif'; ctx.fillText('🐉', w - 120, 125);
+                const totalDamage = vsState.p1Pos + vsState.p2Pos;
+                const monsterHP = Math.max(0, 250 - totalDamage);
+
+                ctx.fillStyle = '#fecdd3'; ctx.font = 'bold 13px Fredoka';
+                ctx.fillText(`DRAGON SUUZAN HP: ${monsterHP} / 250`, w - 210, 35);
+                ctx.fillStyle = '#be123c'; ctx.fillRect(w - 210, 42, 180, 12);
+                ctx.fillStyle = '#22c55e'; ctx.fillRect(w - 210, 42, Math.max(0, (monsterHP / 250) * 180), 12);
+
+                ctx.fillStyle = '#38bdf8'; ctx.font = 'bold 13px Fredoka';
+                ctx.fillText(`⚡ ${vsState.p1Name}: ${vsState.p1Pos} Damage`, 30, 75);
+
+                ctx.fillStyle = '#f472b6'; ctx.font = 'bold 13px Fredoka';
+                ctx.fillText(`⚡ ${vsState.p2Name}: ${vsState.p2Pos} Damage`, 30, 145);
+
+            } else if (mode === 'star_hunt') {
+                ctx.fillStyle = '#0f172a'; ctx.fillRect(0, 0, w, h);
+
+                ctx.fillStyle = '#fde047'; ctx.font = 'bold 14px Fredoka';
+                ctx.fillText(`💎 PERBURUAN BINTANG & PERMATA KEBAIKAN`, 30, 35);
+
+                const p1X = Math.min(30 + vsState.p1Pos, w - 120);
+                ctx.font = '32px sans-serif'; ctx.fillText('💎⭐', p1X, 85);
+                ctx.fillStyle = '#38bdf8'; ctx.font = 'bold 12px Fredoka'; ctx.fillText(`${vsState.p1Name}: ${Math.floor(vsState.p1Pos / 10)} Bintang`, p1X, 55);
+
+                const p2X = Math.min(30 + vsState.p2Pos, w - 120);
+                ctx.font = '32px sans-serif'; ctx.fillText('💎⭐', p2X, 150);
+                ctx.fillStyle = '#f472b6'; ctx.font = 'bold 12px Fredoka'; ctx.fillText(`${vsState.p2Name}: ${Math.floor(vsState.p2Pos / 10)} Bintang`, p2X, 120);
+            }
+        }
+
+        function finishVsRace() {
+            playSound('win');
+            if (typeof confetti === 'function') {
+                confetti({ particleCount: 110, spread: 85, origin: { y: 0.6 } });
+            }
+
+            let winnerText = "PERTANDINGAN SERI!";
+            if (vsState.p1Pos > vsState.p2Pos) winnerText = `🏆 PEMENANG: ${vsState.p1Name.toUpperCase()}!`;
+            else if (vsState.p2Pos > vsState.p1Pos) winnerText = `🏆 PEMENANG: ${vsState.p2Name.toUpperCase()}!`;
+
+            const cfg = vsMatchConfigs[vsState.selectedVsGame] || vsMatchConfigs.castle;
+            showNotice(winnerText, `Selamat! Kalian telah bertanding dengan seru sebanyak 10 soal di ${cfg.title}!`, "🏆");
+            showScreen('screen-char-select');
+        }
+
+        function openModal(modalId) {
+            playSound('click');
+            const m = document.getElementById(modalId);
+            if (m) m.classList.remove('hidden');
+        }
+
+        function closeModal(modalId) {
+            playSound('click');
+            const m = document.getElementById(modalId);
+            if (m) m.classList.add('hidden');
+        }
+
+        function showNotice(title, message, icon = "📢") {
+            const nIcon = document.getElementById('notice-icon');
+            const nTitle = document.getElementById('notice-title');
+            const nMsg = document.getElementById('notice-message');
+            const nModal = document.getElementById('modal-notice');
+
+            if (nIcon) nIcon.innerText = icon;
+            if (nTitle) nTitle.innerText = title;
+            if (nMsg) nMsg.innerText = message;
+            if (nModal) nModal.classList.remove('hidden');
+        }
+
+        function closeNoticeModal() {
+            playSound('click');
+            const nModal = document.getElementById('modal-notice');
+            if (nModal) nModal.classList.add('hidden');
+        }
+
+        function resetGame() {
+            playSound('click');
+            gameState.unlockedLevel = 1;
+            gameState.currentLevel = 1;
+            gameState.stars = [false, false, false, false, false, false];
+            gameState.coins = 0;
+            gameState.xp = 0;
+            gameState.totalScore = 0;
+
+            showNotice("Game Direset!", "Progres petualanganmu telah kembali ke awal.", "🔄");
+            showScreen('screen-char-select');
+        }
+
+        function syncDataToGoogleSheets() {
+            if (typeof google !== 'undefined' && google.script && google.script.run) {
+                google.script.run.saveDataSiswa({
+                    playerName: gameState.playerName,
+                    playerAbsen: gameState.playerAbsen,
+                    playerClass: gameState.playerClass,
+                    score: gameState.totalScore,
+                    coins: gameState.coins,
+                    xp: gameState.xp,
+                    badge: getPlayerBadge().name,
+                    starsCount: gameState.stars.filter(Boolean).length
+                });
+            }
+        }
+    </script>
+</body>
+</html>
+```
